@@ -9,6 +9,8 @@ public class EventServiceMap implements EventService {
     private static Map<Integer, Event> events = new HashMap<Integer, Event>();
     private static int eventCount = 0;
     private static int assignedEventCount = 0;
+
+
     public Event create(String name, int price, EventRating rating) {
         Event event = new Event(name, price, rating);
         events.put(++eventCount, event);

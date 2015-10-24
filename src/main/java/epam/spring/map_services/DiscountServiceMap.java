@@ -6,11 +6,17 @@ import epam.spring.services.DiscountService;
 import epam.spring.services.DiscountStrategy;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
 public class DiscountServiceMap implements DiscountService {
-    private static List<DiscountStrategy> discountStrategies = new ArrayList<DiscountStrategy>();
+    private Collection<DiscountStrategy> discountStrategies;
+
+    public DiscountServiceMap(Collection<DiscountStrategy> discountStrategies) {
+        this.discountStrategies = discountStrategies;
+    }
+
     public int getDiscount(User user, Event event, Date date) {
         int discount = 0;
         for(DiscountStrategy discountStrategy : discountStrategies) {

@@ -11,6 +11,10 @@ public class BookingServiceMap implements BookingService {
     private Map<Integer, Ticket> bookedTickets = new HashMap<Integer, Ticket>();
     private static int ticketsCount = 0;
 
+    public BookingServiceMap(DiscountService discountService) {
+        this.discountService = discountService;
+    }
+
     public int getTicketPrice(Event event, Date date, Collection<Integer> seats, User user) {
         int totalPrice = 0;
         int basePrice = event.getPrice();

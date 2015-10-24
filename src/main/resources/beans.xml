@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="user" class="epam.spring.beans.User" scope="prototype">
+        <constructor-arg value="Vasyl"/>
+        <constructor-arg value="Melnychuk"/>
+        <constructor-arg value="vamel@epam.com"/>
+        <constructor-arg value="1111"/>
+    </bean>
+
+    <bean id="event" class="epam.spring.beans.Event" scope="prototype">
+        <constructor-arg index="0" value="Terminator"/>
+        <constructor-arg index="1" value="100"/>
+        <constructor-arg index="2" value="HIGH"/>
+    </bean>
+
+    <bean id="auditorium" class="epam.spring.beans.Auditorium" scope="prototype">
+        <constructor-arg index="0" value="Green"/>
+        <constructor-arg index="1" value="20"/>
+        <constructor-arg index="2">
+            <list>
+                <value>1</value>
+                <value>2</value>
+                <value>3</value>
+                <value>5</value>
+                <value>6</value>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="ticket" class="epam.spring.beans.Ticket">
+        <constructor-arg index="0" ref="event"/>
+        <constructor-arg index="1" value="java.util.Date"/>
+        <constructor-arg index="2">
+            <list>
+                <value>1</value>
+                <value>2</value>
+                <value>3</value>
+            </list>
+        </constructor-arg>
+        <constructor-arg index="3" ref="user"/>
+    </bean>
+
+</beans>

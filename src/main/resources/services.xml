@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <import resource="discount.xml"/>
+
+    <bean id="userService" class="epam.spring.map_services.UserServiceMap">
+    </bean>
+
+    <bean id="eventService" class="epam.spring.map_services.EventServiceMap">
+    </bean>
+
+    <bean id="auditoriumService" class="epam.spring.map_services.AuditoriumServiceMap">
+    </bean>
+
+    <bean id="bookingService" class="epam.spring.map_services.BookingServiceMap">
+        <constructor-arg ref="discountService"/>
+    </bean>
+
+    <bean id="discountService" class="epam.spring.map_services.DiscountServiceMap">
+        <constructor-arg>
+            <list>
+                <ref bean="birthday"/>
+                <ref bean="every10th"/>
+            </list>
+        </constructor-arg>
+    </bean>
+</beans>
