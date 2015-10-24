@@ -10,8 +10,9 @@ public class UserServiceMap implements UserService {
     private static Map<Integer, User> users = new HashMap<Integer, User>();
     private static int userCount = 0;
 
-    public void register(User user) {
+    public int register(User user) {
         users.put(++userCount, user);
+        return userCount;
     }
 
     public void remove(User user) {

@@ -7,5 +7,5 @@ import java.util.Collection;
 public interface AuditoriumService {
     Collection <Auditorium> getAuditoriums();
     int getSeatsNumber(Auditorium auditorium);
-    Collection<Auditorium> getVipSeats(Auditorium auditorium);
+    Collection<Integer> getVipSeats(Auditorium auditorium);
 }

@@ -6,7 +6,7 @@ import epam.spring.beans.User;
 import java.util.Collection;
 
 public interface UserService {
-    void register(User user);
+    int register(User user);
     void remove(User user);
     User getById(int id);
     User getUserByEmail(String email);

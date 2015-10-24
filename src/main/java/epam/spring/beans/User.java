@@ -59,6 +59,11 @@ public class User {
         this.birthday = birthday;
     }
 
+    /**
+     * email field {@link User#getEmail()} is id of user
+     * @param o is an other user to compare
+     * @return true if emails are equals
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -66,8 +71,6 @@ public class User {
 
         User user = (User) o;
 
-        if (!firstName.equals(user.firstName)) return false;
-        if (!lastName.equals(user.lastName)) return false;
         return email.equals(user.email);
 
     }
