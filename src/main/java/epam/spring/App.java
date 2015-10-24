@@ -18,11 +18,28 @@ public class App {
         this.userService = userService;
     }
 
+    public AuditoriumService getAuditoriumService() {
+        return auditoriumService;
+    }
+
+    public BookingService getBookingService() {
+        return bookingService;
+    }
+
+    public EventService getEventService() {
+        return eventService;
+    }
+
+    public UserService getUserService() {
+        return userService;
+    }
+
     public static void main( String[] args ) {
         ConfigurableApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring.xml");
+        App application = applicationContext.getBean("app", App.class);
         User user = applicationContext.getBean("user", User.class);
-        System.out.println(user.getEmail());
-        User user1 = applicationContext.getBean("user", User.class);
-        System.out.println(user1.getEmail());
+        UserService userService = application.getUserService();
+        userService.register(user);
+        System.out.println(userService.getById(1));
     }
 }

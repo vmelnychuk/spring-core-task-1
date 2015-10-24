@@ -11,10 +11,11 @@ public class User {
     private Date birthday;
     Collection<Ticket> bookedTickets;
 
-    public User(String firstName, String lastName, String email, String password) {
+    public User(String firstName, String lastName, String email, Date birthday, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.birthday = birthday;
         this.password = password;
     }
 
@@ -88,5 +89,17 @@ public class User {
         result = 31 * result + lastName.hashCode();
         result = 31 * result + email.hashCode();
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", birthday=" + birthday +
+                ", bookedTickets=" + bookedTickets +
+                '}';
     }
 }
