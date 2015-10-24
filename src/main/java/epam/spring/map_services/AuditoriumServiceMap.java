@@ -8,9 +8,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AuditoriumServiceMap implements AuditoriumService {
-    private static Map<Integer, Auditorium> auditoriums = new HashMap<Integer, Auditorium>();
+    private Map<Integer, Auditorium> auditoriums;
+
     public Collection<Auditorium> getAuditoriums() {
         return auditoriums.values();
+    }
+
+    public AuditoriumServiceMap() {
+        this.auditoriums = new HashMap<Integer, Auditorium>();
     }
 
     public int getSeatsNumber(Auditorium auditorium) {

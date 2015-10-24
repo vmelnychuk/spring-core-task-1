@@ -7,8 +7,13 @@ import epam.spring.services.UserService;
 import java.util.*;
 
 public class UserServiceMap implements UserService {
-    private static Map<Integer, User> users = new HashMap<Integer, User>();
-    private static int userCount = 0;
+    private Map<Integer, User> users;
+    private int userCount;
+
+    public UserServiceMap() {
+        this.users = new HashMap<Integer, User>();
+        this.userCount = 0;
+    }
 
     public int register(User user) {
         users.put(++userCount, user);

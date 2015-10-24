@@ -2,14 +2,19 @@ package epam.spring.map_services;
 
 import epam.spring.beans.*;
 import epam.spring.services.EventService;
+import org.joda.time.DateTime;
 
 import java.util.*;
 
 public class EventServiceMap implements EventService {
-    private static Map<Integer, Event> events = new HashMap<Integer, Event>();
-    private static int eventCount = 0;
-    private static int assignedEventCount = 0;
+    private Map<Integer, Event> events;
+    private int eventCount;
 
+    public EventServiceMap() {
+        this.events = new HashMap<Integer, Event>();
+        this.eventCount = 0;
+
+    }
 
     public Event create(String name, int price, EventRating rating) {
         Event event = new Event(name, price, rating);
@@ -41,7 +46,7 @@ public class EventServiceMap implements EventService {
         return events.values();
     }
 
-    public void assignAuditorium(Event event, Auditorium auditorium, Date date) {
+    public void assignAuditorium(Event event, Auditorium auditorium, DateTime date) {
         event.setAuditorium(auditorium);
         event.setDate(date);
     }

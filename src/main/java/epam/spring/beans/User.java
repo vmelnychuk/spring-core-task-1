@@ -1,17 +1,18 @@
 package epam.spring.beans;
 
+import org.joda.time.DateTime;
+
 import java.util.Collection;
-import java.util.Date;
 
 public class User {
     private String firstName;
     private String lastName;
     private String email;
     private String password;
-    private Date birthday;
+    private DateTime birthday;
     Collection<Ticket> bookedTickets;
 
-    public User(String firstName, String lastName, String email, Date birthday, String password) {
+    public User(String firstName, String lastName, String email, DateTime birthday, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -59,11 +60,11 @@ public class User {
         this.bookedTickets = bookedTickets;
     }
 
-    public Date getBirthday() {
+    public DateTime getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(DateTime birthday) {
         this.birthday = birthday;
     }
 

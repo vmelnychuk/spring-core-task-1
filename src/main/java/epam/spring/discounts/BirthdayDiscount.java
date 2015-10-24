@@ -3,25 +3,27 @@ package epam.spring.discounts;
 import epam.spring.beans.Event;
 import epam.spring.beans.User;
 import epam.spring.services.DiscountStrategy;
+import org.joda.time.DateTime;
 
 import java.util.Calendar;
 import java.util.Date;
 
 public class BirthdayDiscount implements DiscountStrategy {
-    public int calculateDiscount(User user, Event event, Date date) {
+    private int discountPercent;
+    public BirthdayDiscount(int discountPercent) {
+        this.discountPercent = discountPercent;
+    }
+
+    public int calculateDiscount(User user, Event event, DateTime date) {
         int discount = 0;
-        if (birthDayToday(user, date)) discount = 5;
+        if (birthDayToday(user, date)) discount = discountPercent;
         return discount;
     }
 
-    private boolean birthDayToday(User user, Date date) {
-        Date userBirthday = user.getBirthday();
-        Calendar userCalendar = Calendar.getInstance();
-        Calendar dateCalendar = Calendar.getInstance();
-        userCalendar.setTime(userBirthday);
-        dateCalendar.setTime(date);
-        if (userCalendar.get(Calendar.MONTH) != dateCalendar.get(Calendar.MONTH)) return false;
-        if (userCalendar.get(Calendar.DATE) != dateCalendar.get(Calendar.DATE)) return false;
+    private boolean birthDayToday(User user, DateTime date) {
+        DateTime userBirthday = user.getBirthday();
+        if (userBirthday.getMonthOfYear() != date.getMonthOfYear()) return false;
+        if (userBirthday.getDayOfMonth() != date.getDayOfMonth()) return false;
         return true;
     }
 }

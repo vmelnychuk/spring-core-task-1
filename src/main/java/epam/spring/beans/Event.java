@@ -1,5 +1,7 @@
 package epam.spring.beans;
 
+import org.joda.time.DateTime;
+
 import java.util.Date;
 
 public class Event {
@@ -7,7 +9,7 @@ public class Event {
     private int price;
     private EventRating rating;
     private Auditorium auditorium;
-    private Date date;
+    private DateTime date;
 
     public Event(String name, int price, EventRating rating) {
         this.name = name;
@@ -47,11 +49,11 @@ public class Event {
         this.auditorium = auditorium;
     }
 
-    public Date getDate() {
+    public DateTime getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(DateTime date) {
         this.date = date;
     }
 

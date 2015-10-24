@@ -1,16 +1,17 @@
 package epam.spring.beans;
 
+import org.joda.time.DateTime;
+
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 
 public class Ticket {
     private Event event;
-    private Date date;
+    private DateTime date;
     private Collection<Integer> seats;
     private User user;
 
-    public Ticket(Event event, Date date, Collection<Integer> seats, User user) {
+    public Ticket(Event event, DateTime date, Collection<Integer> seats, User user) {
         this.event = event;
         this.date = date;
         this.seats = seats;
@@ -25,11 +26,11 @@ public class Ticket {
         this.event = event;
     }
 
-    public Date getDate() {
+    public DateTime getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(DateTime date) {
         this.date = date;
     }
 

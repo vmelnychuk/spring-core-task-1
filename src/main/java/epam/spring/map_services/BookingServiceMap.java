@@ -3,19 +3,22 @@ package epam.spring.map_services;
 import epam.spring.beans.*;
 import epam.spring.services.BookingService;
 import epam.spring.services.DiscountService;
+import org.joda.time.DateTime;
 
 import java.util.*;
 
 public class BookingServiceMap implements BookingService {
     private DiscountService discountService;
-    private Map<Integer, Ticket> bookedTickets = new HashMap<Integer, Ticket>();
-    private static int ticketsCount = 0;
+    private Map<Integer, Ticket> bookedTickets;
+    private int ticketsCount;
 
     public BookingServiceMap(DiscountService discountService) {
         this.discountService = discountService;
+        this.bookedTickets = new HashMap<Integer, Ticket>();
+        this.ticketsCount = 0;
     }
 
-    public int getTicketPrice(Event event, Date date, Collection<Integer> seats, User user) {
+    public int getTicketPrice(Event event, DateTime date, Collection<Integer> seats, User user) {
         int totalPrice = 0;
         int basePrice = event.getPrice();
         Auditorium auditorium = event.getAuditorium();
@@ -40,7 +43,7 @@ public class BookingServiceMap implements BookingService {
         bookedTickets.put(++ticketsCount, ticket);
     }
 
-    public Collection<Ticket> getTicketsForEvent(Event event, Date date) {
+    public Collection<Ticket> getTicketsForEvent(Event event, DateTime date) {
         Collection<Ticket> tickets = new ArrayList<Ticket>();
         for(Map.Entry<Integer, Ticket> entry : bookedTickets.entrySet()) {
             Ticket ticket = entry.getValue();
