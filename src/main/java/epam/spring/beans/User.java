@@ -103,4 +103,8 @@ public class User {
                 ", bookedTickets=" + bookedTickets +
                 '}';
     }
+
+    public void addTicket(Ticket ticket) {
+        bookedTickets.add(ticket);
+    }
 }

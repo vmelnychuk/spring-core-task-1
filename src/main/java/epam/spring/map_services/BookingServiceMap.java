@@ -38,8 +38,8 @@ public class BookingServiceMap implements BookingService {
     }
 
     public void bookTicket(User user, Ticket ticket) {
-        //TODO: check if ticket is overlap with getTicketsForEvent
         ticket.setUser(user);
+        user.addTicket(ticket);
         bookedTickets.put(++ticketsCount, ticket);
     }
 

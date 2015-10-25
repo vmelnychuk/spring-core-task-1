@@ -1,6 +1,7 @@
 package epam.spring.map_services;
 
 import epam.spring.beans.*;
+import epam.spring.services.AuditoriumService;
 import epam.spring.services.EventService;
 import org.joda.time.DateTime;
 
@@ -11,7 +12,6 @@ public class EventServiceMap implements EventService {
 
     public EventServiceMap(Map<Integer, Event> events) {
         this.events = events;
-
     }
 
     public Event create(String name, int price, EventRating rating) {

@@ -14,6 +14,15 @@ public class AuditoriumServiceMap implements AuditoriumService {
         return auditoriums.values();
     }
 
+    public Auditorium getAuditoriumByName(String name) {
+        for(Map.Entry<Integer, Auditorium> entry : auditoriums.entrySet()) {
+            if(entry.getValue().getName().equals(name)) {
+                return entry.getValue();
+            }
+        }
+        return null;
+    }
+
     public AuditoriumServiceMap(Map<Integer, Auditorium> auditoriums) {
         this.auditoriums = auditoriums;
     }

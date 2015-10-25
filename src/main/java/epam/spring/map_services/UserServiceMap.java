@@ -1,5 +1,6 @@
 package epam.spring.map_services;
 
+import com.google.gson.Gson;
 import epam.spring.beans.Ticket;
 import epam.spring.beans.User;
 import epam.spring.services.UserService;
@@ -61,5 +62,17 @@ public class UserServiceMap implements UserService {
             }
         }
         return null;
+    }
+
+    private void destroy() {
+        Gson gson = new Gson();
+        String json = gson.toJson(users);
+        System.out.println(json);
+    }
+
+    public void init() {
+        Gson gson = new Gson();
+        String json = gson.toJson(users);
+        System.out.println(json);
     }
 }

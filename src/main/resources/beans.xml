@@ -56,18 +56,48 @@
         <constructor-arg index="0" value="The Martian"/>
         <constructor-arg index="1" value="100"/>
         <constructor-arg index="2" value="HIGH"/>
+        <property name="auditorium" ref="medium"/>
+        <property name="date">
+            <bean class="org.joda.time.DateTime">
+                <constructor-arg value="2015"/>
+                <constructor-arg value="10"/>
+                <constructor-arg value="25"/>
+                <constructor-arg value="15"/>
+                <constructor-arg value="0"/>
+            </bean>
+        </property>
     </bean>
 
     <bean id="event2" class="epam.spring.beans.Event" scope="prototype">
         <constructor-arg index="0" value="Prometheus"/>
         <constructor-arg index="1" value="150"/>
         <constructor-arg index="2" value="MID"/>
+        <property name="auditorium" ref="big"/>
+        <property name="date">
+            <bean class="org.joda.time.DateTime">
+                <constructor-arg value="2015"/>
+                <constructor-arg value="10"/>
+                <constructor-arg value="25"/>
+                <constructor-arg value="14"/>
+                <constructor-arg value="0"/>
+            </bean>
+        </property>
     </bean>
 
     <bean id="event3" class="epam.spring.beans.Event" scope="prototype">
         <constructor-arg index="0" value="Interstellar"/>
         <constructor-arg index="1" value="70"/>
         <constructor-arg index="2" value="LOW"/>
+        <property name="auditorium" ref="small"/>
+        <property name="date">
+            <bean class="org.joda.time.DateTime">
+                <constructor-arg value="2015"/>
+                <constructor-arg value="10"/>
+                <constructor-arg value="25"/>
+                <constructor-arg value="14"/>
+                <constructor-arg value="0"/>
+            </bean>
+        </property>
     </bean>
 
     <bean id="ticket1" class="epam.spring.beans.Ticket">
@@ -76,8 +106,8 @@
             <bean class="org.joda.time.DateTime">
                 <constructor-arg value="2015"/>
                 <constructor-arg value="10"/>
-                <constructor-arg value="24"/>
-                <constructor-arg value="0"/>
+                <constructor-arg value="25"/>
+                <constructor-arg value="14"/>
                 <constructor-arg value="0"/>
             </bean>
         </constructor-arg>
@@ -97,8 +127,8 @@
             <bean class="org.joda.time.DateTime">
                 <constructor-arg value="2015"/>
                 <constructor-arg value="10"/>
-                <constructor-arg value="24"/>
-                <constructor-arg value="0"/>
+                <constructor-arg value="25"/>
+                <constructor-arg value="14"/>
                 <constructor-arg value="0"/>
             </bean>
         </constructor-arg>
@@ -118,8 +148,8 @@
             <bean class="org.joda.time.DateTime">
                 <constructor-arg value="2015"/>
                 <constructor-arg value="10"/>
-                <constructor-arg value="24"/>
-                <constructor-arg value="0"/>
+                <constructor-arg value="25"/>
+                <constructor-arg value="14"/>
                 <constructor-arg value="0"/>
             </bean>
         </constructor-arg>
