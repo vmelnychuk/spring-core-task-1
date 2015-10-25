@@ -2,27 +2,28 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
     <import resource="discount.xml"/>
+    <import resource="beans-maps.xml"/>
 
     <bean id="userService" class="epam.spring.map_services.UserServiceMap">
+        <constructor-arg ref="users-map"/>
     </bean>
 
     <bean id="eventService" class="epam.spring.map_services.EventServiceMap">
+        <constructor-arg ref="events-map"/>
     </bean>
 
     <bean id="auditoriumService" class="epam.spring.map_services.AuditoriumServiceMap">
+        <constructor-arg ref="auditoriums-map" />
     </bean>
 
     <bean id="bookingService" class="epam.spring.map_services.BookingServiceMap">
         <constructor-arg ref="discountService"/>
+        <constructor-arg ref="tickets-map"/>
     </bean>
 
     <bean id="discountService" class="epam.spring.map_services.DiscountServiceMap">
-        <constructor-arg>
-            <list>
-                <ref bean="birthday"/>
-                <ref bean="every10th"/>
-            </list>
-        </constructor-arg>
+        <constructor-arg ref="discounts-list" />
     </bean>
 </beans>

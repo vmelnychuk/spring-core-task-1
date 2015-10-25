@@ -14,8 +14,8 @@ public class AuditoriumServiceMap implements AuditoriumService {
         return auditoriums.values();
     }
 
-    public AuditoriumServiceMap() {
-        this.auditoriums = new HashMap<Integer, Auditorium>();
+    public AuditoriumServiceMap(Map<Integer, Auditorium> auditoriums) {
+        this.auditoriums = auditoriums;
     }
 
     public int getSeatsNumber(Auditorium auditorium) {

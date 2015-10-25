@@ -1,7 +1,9 @@
 package epam.spring;
 
+import epam.spring.beans.Event;
 import epam.spring.beans.User;
 import epam.spring.services.*;
+import org.joda.time.DateTime;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -37,9 +39,10 @@ public class App {
     public static void main( String[] args ) {
         ConfigurableApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring.xml");
         App application = applicationContext.getBean("app", App.class);
-        User user = applicationContext.getBean("user", User.class);
-        UserService userService = application.getUserService();
-        userService.register(user);
-        System.out.println(userService.getById(1));
+        System.out.println(application.getUserService().getUserByEmail("a@mail.com").toString());
+        System.out.println(application.getEventService().getAll().toString());
+        System.out.println(application.getAuditoriumService().getAuditoriums().toString());
+        Event event = applicationContext.getBean("event1", Event.class);
+        System.out.println(application.getBookingService().getTicketsForEvent(event, new DateTime()));
     }
 }

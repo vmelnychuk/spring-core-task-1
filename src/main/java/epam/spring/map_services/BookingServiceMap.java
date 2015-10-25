@@ -12,9 +12,9 @@ public class BookingServiceMap implements BookingService {
     private Map<Integer, Ticket> bookedTickets;
     private int ticketsCount;
 
-    public BookingServiceMap(DiscountService discountService) {
+    public BookingServiceMap(DiscountService discountService, Map<Integer, Ticket> bookedTickets) {
         this.discountService = discountService;
-        this.bookedTickets = new HashMap<Integer, Ticket>();
+        this.bookedTickets = bookedTickets;
         this.ticketsCount = 0;
     }
 

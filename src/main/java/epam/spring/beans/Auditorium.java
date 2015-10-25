@@ -1,6 +1,8 @@
 package epam.spring.beans;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Properties;
 
 public class Auditorium {
     private String name;
@@ -9,12 +11,23 @@ public class Auditorium {
     /**
      * additional price for VIP seat, count in percents
      */
-    private int vipAdditionalPrice;
+    private int vipAdditionalPrice = 50;
 
     public Auditorium(String name, int numberOfSeats, Collection<Integer> vipSeats) {
         this.name = name;
         this.numberOfSeats = numberOfSeats;
         this.vipSeats = vipSeats;
+    }
+
+    public Auditorium(Properties auditoriumProperties) {
+        this.name = auditoriumProperties.getProperty("name");
+        this.numberOfSeats = Integer.parseInt(auditoriumProperties.getProperty("seats"));
+
+        String[] vipSeats = auditoriumProperties.getProperty("vip").split(",");
+        this.vipSeats = new ArrayList<Integer>();
+        for(String vipSeat : vipSeats) {
+            this.vipSeats.add(Integer.parseInt(vipSeat));
+        }
     }
 
     public String getName() {
@@ -63,5 +76,15 @@ public class Auditorium {
     @Override
     public int hashCode() {
         return name != null ? name.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return "Auditorium{" +
+                "name='" + name + '\'' +
+                ", numberOfSeats=" + numberOfSeats +
+                ", vipSeats=" + vipSeats.toString() +
+                ", vipAdditionalPrice=" + vipAdditionalPrice +
+                '}';
     }
 }

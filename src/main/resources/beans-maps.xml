@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <import resource="beans.xml"/>
+    <import resource="auditoriums.xml"/>
+
+    <util:map id="users-map">
+        <entry key="1" value-ref="user1"/>
+        <entry key="2" value-ref="user2"/>
+        <entry key="3" value-ref="user3"/>
+    </util:map>
+
+    <util:map id="events-map">
+        <entry key="1" value-ref="event1"/>
+        <entry key="2" value-ref="event2"/>
+        <entry key="3" value-ref="event3"/>
+    </util:map>
+
+    <util:map id="auditoriums-map">
+        <entry key="1" value-ref="big"/>
+        <entry key="2" value-ref="medium"/>
+        <entry key="3" value-ref="small"/>
+    </util:map>
+
+    <util:map id="tickets-map">
+        <entry key="1" value-ref="ticket1"/>
+        <entry key="2" value-ref="ticket2"/>
+        <entry key="3" value-ref="ticket3"/>
+    </util:map>
+</beans>

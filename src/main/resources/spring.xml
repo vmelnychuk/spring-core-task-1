@@ -3,14 +3,12 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
-    <import resource="discount.xml"/>
-    <import resource="beans.xml"/>
     <import resource="services.xml"/>
 
     <bean id="app" class="epam.spring.App">
-        <constructor-arg index="0" ref="auditoriumService"/>
-        <constructor-arg index="1" ref="bookingService"/>
-        <constructor-arg index="2" ref="eventService"/>
-        <constructor-arg index="3" ref="userService"/>
+        <constructor-arg ref="auditoriumService"/>
+        <constructor-arg ref="bookingService"/>
+        <constructor-arg ref="eventService"/>
+        <constructor-arg ref="userService"/>
     </bean>
 </beans>

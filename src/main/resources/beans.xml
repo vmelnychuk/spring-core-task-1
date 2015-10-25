@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="user" class="epam.spring.beans.User" scope="prototype">
-        <constructor-arg value="Vasyl"/>
-        <constructor-arg value="Melnychuk"/>
-        <constructor-arg value="vamel@epam.com"/>
-        <constructor-arg value="1111"/>
+    <bean id="user1" class="epam.spring.beans.User" scope="prototype">
+        <constructor-arg value="Roberto"/>
+        <constructor-arg value="Warnick"/>
+        <constructor-arg value="r@mail.com"/>
+        <constructor-arg value="1"/>
         <constructor-arg>
             <bean class="org.joda.time.DateTime">
-                <constructor-arg value="1989"/>
+                <constructor-arg value="1990"/>
                 <constructor-arg value="3"/>
                 <constructor-arg value="12"/>
                 <constructor-arg value="0"/>
@@ -19,28 +20,58 @@
         </constructor-arg>
     </bean>
 
-    <bean id="event" class="epam.spring.beans.Event" scope="prototype">
-        <constructor-arg index="0" value="Terminator"/>
+    <bean id="user2" class="epam.spring.beans.User" scope="prototype">
+        <constructor-arg value="Donte"/>
+        <constructor-arg value="Wynn"/>
+        <constructor-arg value="d@mail.com"/>
+        <constructor-arg value="2"/>
+        <constructor-arg>
+            <bean class="org.joda.time.DateTime">
+                <constructor-arg value="1992"/>
+                <constructor-arg value="4"/>
+                <constructor-arg value="2"/>
+                <constructor-arg value="0"/>
+                <constructor-arg value="0"/>
+            </bean>
+        </constructor-arg>
+    </bean>
+
+    <bean id="user3" class="epam.spring.beans.User" scope="prototype">
+        <constructor-arg value="Armand"/>
+        <constructor-arg value="Tiner"/>
+        <constructor-arg value="a@mail.com"/>
+        <constructor-arg value="3"/>
+        <constructor-arg>
+            <bean class="org.joda.time.DateTime">
+                <constructor-arg value="1988"/>
+                <constructor-arg value="7"/>
+                <constructor-arg value="23"/>
+                <constructor-arg value="0"/>
+                <constructor-arg value="0"/>
+            </bean>
+        </constructor-arg>
+    </bean>
+
+    <bean id="event1" class="epam.spring.beans.Event" scope="prototype">
+        <constructor-arg index="0" value="The Martian"/>
         <constructor-arg index="1" value="100"/>
         <constructor-arg index="2" value="HIGH"/>
     </bean>
 
-    <bean id="auditorium" class="epam.spring.beans.Auditorium" scope="prototype">
-        <constructor-arg index="0" value="Green"/>
-        <constructor-arg index="1" value="20"/>
-        <constructor-arg index="2">
-            <list>
-                <value>1</value>
-                <value>2</value>
-                <value>3</value>
-                <value>5</value>
-                <value>6</value>
-            </list>
-        </constructor-arg>
+    <bean id="event2" class="epam.spring.beans.Event" scope="prototype">
+        <constructor-arg index="0" value="Prometheus"/>
+        <constructor-arg index="1" value="150"/>
+        <constructor-arg index="2" value="MID"/>
     </bean>
 
-    <bean id="ticket" class="epam.spring.beans.Ticket">
-        <constructor-arg index="0" ref="event"/>
+    <bean id="event3" class="epam.spring.beans.Event" scope="prototype">
+        <constructor-arg index="0" value="Interstellar"/>
+        <constructor-arg index="1" value="70"/>
+        <constructor-arg index="2" value="LOW"/>
+    </bean>
+
+    <bean id="ticket1" class="epam.spring.beans.Ticket">
+        <constructor-arg index="0" ref="event1"/>
         <constructor-arg index="1">
             <bean class="org.joda.time.DateTime">
                 <constructor-arg value="2015"/>
@@ -57,7 +88,49 @@
                 <value>3</value>
             </list>
         </constructor-arg>
-        <constructor-arg index="3" ref="user"/>
+        <constructor-arg index="3" ref="user1"/>
+    </bean>
+
+    <bean id="ticket2" class="epam.spring.beans.Ticket">
+        <constructor-arg index="0" ref="event2"/>
+        <constructor-arg index="1">
+            <bean class="org.joda.time.DateTime">
+                <constructor-arg value="2015"/>
+                <constructor-arg value="10"/>
+                <constructor-arg value="24"/>
+                <constructor-arg value="0"/>
+                <constructor-arg value="0"/>
+            </bean>
+        </constructor-arg>
+        <constructor-arg index="2">
+            <list>
+                <value>1</value>
+                <value>2</value>
+                <value>3</value>
+            </list>
+        </constructor-arg>
+        <constructor-arg index="3" ref="user2"/>
+    </bean>
+
+    <bean id="ticket3" class="epam.spring.beans.Ticket">
+        <constructor-arg index="0" ref="event3"/>
+        <constructor-arg index="1">
+            <bean class="org.joda.time.DateTime">
+                <constructor-arg value="2015"/>
+                <constructor-arg value="10"/>
+                <constructor-arg value="24"/>
+                <constructor-arg value="0"/>
+                <constructor-arg value="0"/>
+            </bean>
+        </constructor-arg>
+        <constructor-arg index="2">
+            <list>
+                <value>1</value>
+                <value>2</value>
+                <value>3</value>
+            </list>
+        </constructor-arg>
+        <constructor-arg index="3" ref="user3"/>
     </bean>
 
 </beans>

@@ -8,16 +8,15 @@ import java.util.*;
 
 public class UserServiceMap implements UserService {
     private Map<Integer, User> users;
-    private int userCount;
 
-    public UserServiceMap() {
-        this.users = new HashMap<Integer, User>();
-        this.userCount = 0;
+    public UserServiceMap(Map<Integer, User> users) {
+        this.users = users;
     }
 
     public int register(User user) {
-        users.put(++userCount, user);
-        return userCount;
+        int userId = users.size() + 1;
+        users.put(userId, user);
+        return userId;
     }
 
     public void remove(User user) {
@@ -29,7 +28,6 @@ public class UserServiceMap implements UserService {
                 break;
             }
         }
-
     }
 
     public User getById(int id) {

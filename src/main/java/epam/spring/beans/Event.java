@@ -66,7 +66,9 @@ public class Event {
 
         if (price != event.price) return false;
         if (name != null ? !name.equals(event.name) : event.name != null) return false;
-        return rating == event.rating;
+        if (rating != event.rating) return false;
+        if (auditorium != null ? !auditorium.equals(event.auditorium) : event.auditorium != null) return false;
+        return !(date != null ? !date.equals(event.date) : event.date != null);
 
     }
 
@@ -75,6 +77,19 @@ public class Event {
         int result = name != null ? name.hashCode() : 0;
         result = 31 * result + price;
         result = 31 * result + (rating != null ? rating.hashCode() : 0);
+        result = 31 * result + (auditorium != null ? auditorium.hashCode() : 0);
+        result = 31 * result + (date != null ? date.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Event{" +
+                "name='" + name + '\'' +
+                ", price=" + price +
+                ", rating=" + rating +
+                ", auditorium=" + auditorium +
+                ", date=" + date +
+                '}';
     }
 }

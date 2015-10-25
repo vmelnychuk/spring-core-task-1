@@ -8,17 +8,16 @@ import java.util.*;
 
 public class EventServiceMap implements EventService {
     private Map<Integer, Event> events;
-    private int eventCount;
 
-    public EventServiceMap() {
-        this.events = new HashMap<Integer, Event>();
-        this.eventCount = 0;
+    public EventServiceMap(Map<Integer, Event> events) {
+        this.events = events;
 
     }
 
     public Event create(String name, int price, EventRating rating) {
+        int eventId = events.size() + 1;
         Event event = new Event(name, price, rating);
-        events.put(++eventCount, event);
+        events.put(eventId, event);
         return event;
     }
 
