@@ -18,6 +18,9 @@ public class Ticket {
         this.user = user;
     }
 
+    public Ticket() {
+    }
+
     public Event getEvent() {
         return event;
     }

@@ -6,7 +6,7 @@
     <import resource="discount.xml"/>
     <import resource="beans-maps.xml"/>
 
-    <bean id="userService" class="epam.spring.map_services.UserServiceMap" init-method="init" destroy-method="destroy">
+    <bean id="userService" class="epam.spring.map_services.UserServiceMap">
         <constructor-arg ref="users-map"/>
     </bean>
 

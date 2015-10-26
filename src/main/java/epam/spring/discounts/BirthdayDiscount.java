@@ -14,16 +14,18 @@ public class BirthdayDiscount implements DiscountStrategy {
         this.discountPercent = discountPercent;
     }
 
-    public int calculateDiscount(User user, Event event, DateTime date) {
+    public int calculateDiscount(User user, Event event, Date date) {
         int discount = 0;
-        if (birthDayToday(user, date)) discount = discountPercent;
+        if (birthDayAtDate(user, date)) discount = discountPercent;
         return discount;
     }
 
-    private boolean birthDayToday(User user, DateTime date) {
-        DateTime userBirthday = user.getBirthday();
-        if (userBirthday.getMonthOfYear() != date.getMonthOfYear()) return false;
-        if (userBirthday.getDayOfMonth() != date.getDayOfMonth()) return false;
+    public boolean birthDayAtDate(User user, Date date) {
+        Calendar userBirthday = user.getBirthday();
+        Calendar dateCalendar = Calendar.getInstance();
+        dateCalendar.setTime(date);
+        if (userBirthday.get(Calendar.MONTH) != dateCalendar.get(Calendar.MONTH)) return false;
+        if (userBirthday.get(Calendar.DATE) != dateCalendar.get(Calendar.DATE)) return false;
         return true;
     }
 }

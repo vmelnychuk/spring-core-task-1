@@ -1,22 +1,28 @@
 package epam.spring.beans;
 
-import org.joda.time.DateTime;
-
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 
 public class User {
+    private int id;
     private String firstName;
     private String lastName;
     private String email;
     private String password;
-    private DateTime birthday;
+    private Calendar birthday;
     Collection<Ticket> bookedTickets;
 
-    public User(String firstName, String lastName, String email, DateTime birthday, String password) {
+    public User() {
+    }
+
+    public User(String firstName, String lastName, String email, String password, String birthday) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.birthday = birthday;
+        this.birthday = parseDate(birthday);
         this.password = password;
     }
 
@@ -60,12 +66,20 @@ public class User {
         this.bookedTickets = bookedTickets;
     }
 
-    public DateTime getBirthday() {
+    public Calendar getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(DateTime birthday) {
-        this.birthday = birthday;
+    public void setBirthday(String birthday) {
+        this.birthday = parseDate(birthday);
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     /**
@@ -106,5 +120,23 @@ public class User {
 
     public void addTicket(Ticket ticket) {
         bookedTickets.add(ticket);
+    }
+
+    /**
+     * Parses string in format yyyy-mm-dd e.g. 2015-10-26 to Calendar object
+     * @param date
+     * format yyyy-mm-dd
+     * @return calendar object
+     */
+    public Calendar parseDate(String date) {
+        Calendar calendar = Calendar.getInstance();
+        Date day = null;
+        try {
+            day = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        calendar.setTime(day);
+        return calendar;
     }
 }

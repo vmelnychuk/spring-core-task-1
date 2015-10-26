@@ -18,7 +18,7 @@ public class DiscountServiceMap implements DiscountService {
         this.discountStrategies = discountStrategies;
     }
 
-    public int getDiscount(User user, Event event, DateTime date) {
+    public int getDiscount(User user, Event event, Date date) {
         int discount = 0;
         for(DiscountStrategy discountStrategy : discountStrategies) {
             int newDiscount = discountStrategy.calculateDiscount(user, event, date);

@@ -4,20 +4,17 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+    <bean id="user" class="epam.spring.beans.User" scope="prototype">
+        <property name="birthday" value="2015-10-26"/>
+        <property name="email" value="default"/>
+    </bean>
+
     <bean id="user1" class="epam.spring.beans.User" scope="prototype">
         <constructor-arg value="Roberto"/>
         <constructor-arg value="Warnick"/>
         <constructor-arg value="r@mail.com"/>
         <constructor-arg value="1"/>
-        <constructor-arg>
-            <bean class="org.joda.time.DateTime">
-                <constructor-arg value="1990"/>
-                <constructor-arg value="3"/>
-                <constructor-arg value="12"/>
-                <constructor-arg value="0"/>
-                <constructor-arg value="0"/>
-            </bean>
-        </constructor-arg>
+        <constructor-arg value="1980-10-11"/>
     </bean>
 
     <bean id="user2" class="epam.spring.beans.User" scope="prototype">
@@ -25,15 +22,7 @@
         <constructor-arg value="Wynn"/>
         <constructor-arg value="d@mail.com"/>
         <constructor-arg value="2"/>
-        <constructor-arg>
-            <bean class="org.joda.time.DateTime">
-                <constructor-arg value="1992"/>
-                <constructor-arg value="4"/>
-                <constructor-arg value="2"/>
-                <constructor-arg value="0"/>
-                <constructor-arg value="0"/>
-            </bean>
-        </constructor-arg>
+        <constructor-arg value="1985-02-03"/>
     </bean>
 
     <bean id="user3" class="epam.spring.beans.User" scope="prototype">
@@ -41,15 +30,10 @@
         <constructor-arg value="Tiner"/>
         <constructor-arg value="a@mail.com"/>
         <constructor-arg value="3"/>
-        <constructor-arg>
-            <bean class="org.joda.time.DateTime">
-                <constructor-arg value="1988"/>
-                <constructor-arg value="7"/>
-                <constructor-arg value="23"/>
-                <constructor-arg value="0"/>
-                <constructor-arg value="0"/>
-            </bean>
-        </constructor-arg>
+        <constructor-arg value="1990-05-20"/>
+    </bean>
+
+    <bean id="event" class="epam.spring.beans.Event" scope="prototype">
     </bean>
 
     <bean id="event1" class="epam.spring.beans.Event" scope="prototype">
@@ -98,6 +82,9 @@
                 <constructor-arg value="0"/>
             </bean>
         </property>
+    </bean>
+
+    <bean id="ticket" class="epam.spring.beans.Ticket" scope="prototype">
     </bean>
 
     <bean id="ticket1" class="epam.spring.beans.Ticket">

@@ -18,7 +18,7 @@ public class BookingServiceMap implements BookingService {
         this.ticketsCount = 0;
     }
 
-    public int getTicketPrice(Event event, DateTime date, Collection<Integer> seats, User user) {
+    public int getTicketPrice(Event event, Date date, Collection<Integer> seats, User user) {
         int totalPrice = 0;
         int basePrice = event.getPrice();
         Auditorium auditorium = event.getAuditorium();
@@ -43,7 +43,7 @@ public class BookingServiceMap implements BookingService {
         bookedTickets.put(++ticketsCount, ticket);
     }
 
-    public Collection<Ticket> getTicketsForEvent(Event event, DateTime date) {
+    public Collection<Ticket> getTicketsForEvent(Event event, Date date) {
         Collection<Ticket> tickets = new ArrayList<Ticket>();
         for(Map.Entry<Integer, Ticket> entry : bookedTickets.entrySet()) {
             Ticket ticket = entry.getValue();

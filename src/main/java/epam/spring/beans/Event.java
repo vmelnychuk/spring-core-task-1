@@ -11,6 +11,9 @@ public class Event {
     private Auditorium auditorium;
     private DateTime date;
 
+    public Event() {
+    }
+
     public Event(String name, int price, EventRating rating) {
         this.name = name;
         this.price = price;

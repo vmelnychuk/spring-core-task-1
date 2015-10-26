@@ -1,6 +1,5 @@
 package epam.spring.map_services;
 
-import com.google.gson.Gson;
 import epam.spring.beans.Ticket;
 import epam.spring.beans.User;
 import epam.spring.services.UserService;
@@ -16,19 +15,17 @@ public class UserServiceMap implements UserService {
 
     public int register(User user) {
         int userId = users.size() + 1;
+        user.setId(userId);
         users.put(userId, user);
         return userId;
     }
 
     public void remove(User user) {
-        Iterator iterator = users.entrySet().iterator();
-        while (iterator.hasNext()) {
-            Map.Entry<Integer, User> entry = (Map.Entry) iterator.next();
-            if(entry.getValue().equals(user)) {
-                iterator.remove();
-                break;
-            }
-        }
+        remove(user.getId());
+    }
+
+    public void remove(int id) {
+        users.remove(id);
     }
 
     public User getById(int id) {
@@ -46,33 +43,17 @@ public class UserServiceMap implements UserService {
 
     public Collection<User> getUsersByName(String firstName, String lastName) {
         Collection<User> foundUsers = new ArrayList<User>();
-        for(Map.Entry<Integer, User> entry : users.entrySet()) {
-            if(entry.getValue().getFirstName().equals(firstName)
-                    || entry.getValue().getFirstName().equals(lastName)) {
-                foundUsers.add(entry.getValue());
+        for(User user : users.values()) {
+            if(user.getFirstName().equals(firstName)
+                    && user.getLastName().equals(lastName)) {
+                foundUsers.add(user);
             }
         }
         return foundUsers;
     }
 
     public Collection<Ticket> getBookedTickets(User user) {
-        for(Map.Entry<Integer, User> entry : users.entrySet()) {
-            if(entry.getValue().equals(user)){
-                return entry.getValue().getBookedTickets();
-            }
-        }
-        return null;
-    }
-
-    private void destroy() {
-        Gson gson = new Gson();
-        String json = gson.toJson(users);
-        System.out.println(json);
-    }
-
-    public void init() {
-        Gson gson = new Gson();
-        String json = gson.toJson(users);
-        System.out.println(json);
+        User storedUser = users.get(user.getId());
+        return storedUser.getBookedTickets();
     }
 }
