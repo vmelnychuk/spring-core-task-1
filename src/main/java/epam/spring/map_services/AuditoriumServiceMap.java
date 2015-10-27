@@ -23,6 +23,10 @@ public class AuditoriumServiceMap implements AuditoriumService {
         return null;
     }
 
+    public Auditorium getAuditoriumById(int id) {
+        return auditoriums.get(id);
+    }
+
     public AuditoriumServiceMap(Map<Integer, Auditorium> auditoriums) {
         this.auditoriums = auditoriums;
     }

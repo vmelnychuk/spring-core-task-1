@@ -1,15 +1,14 @@
 package epam.spring.beans;
 
-import org.joda.time.DateTime;
-
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class Event {
     private String name;
     private int price;
     private EventRating rating;
-    private Auditorium auditorium;
-    private DateTime date;
 
     public Event() {
     }
@@ -43,22 +42,6 @@ public class Event {
     public void setRating(EventRating rating) {
         this.rating = rating;
     }
-    
-    public Auditorium getAuditorium() {
-        return auditorium;
-    }
-
-    public void setAuditorium(Auditorium auditorium) {
-        this.auditorium = auditorium;
-    }
-
-    public DateTime getDate() {
-        return date;
-    }
-
-    public void setDate(DateTime date) {
-        this.date = date;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -69,9 +52,7 @@ public class Event {
 
         if (price != event.price) return false;
         if (name != null ? !name.equals(event.name) : event.name != null) return false;
-        if (rating != event.rating) return false;
-        if (auditorium != null ? !auditorium.equals(event.auditorium) : event.auditorium != null) return false;
-        return !(date != null ? !date.equals(event.date) : event.date != null);
+        return rating == event.rating;
 
     }
 
@@ -80,8 +61,6 @@ public class Event {
         int result = name != null ? name.hashCode() : 0;
         result = 31 * result + price;
         result = 31 * result + (rating != null ? rating.hashCode() : 0);
-        result = 31 * result + (auditorium != null ? auditorium.hashCode() : 0);
-        result = 31 * result + (date != null ? date.hashCode() : 0);
         return result;
     }
 
@@ -91,8 +70,7 @@ public class Event {
                 "name='" + name + '\'' +
                 ", price=" + price +
                 ", rating=" + rating +
-                ", auditorium=" + auditorium +
-                ", date=" + date +
                 '}';
     }
+
 }

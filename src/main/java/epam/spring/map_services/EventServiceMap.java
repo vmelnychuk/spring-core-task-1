@@ -3,12 +3,13 @@ package epam.spring.map_services;
 import epam.spring.beans.*;
 import epam.spring.services.AuditoriumService;
 import epam.spring.services.EventService;
-import org.joda.time.DateTime;
 
 import java.util.*;
 
 public class EventServiceMap implements EventService {
     private Map<Integer, Event> events;
+    private List<AssignedEvent> assignedEvents;
+    private AuditoriumService auditoriumService;
 
     public EventServiceMap(Map<Integer, Event> events) {
         this.events = events;
@@ -45,8 +46,11 @@ public class EventServiceMap implements EventService {
         return events.values();
     }
 
-    public void assignAuditorium(Event event, Auditorium auditorium, DateTime date) {
-        event.setAuditorium(auditorium);
-        event.setDate(date);
+    public void assignAuditorium(int eventId, int auditoriumId, Date date) {
+        AssignedEvent assignedEvent = new AssignedEvent();
+        assignedEvent.setEvent(events.get(eventId));
+        assignedEvent.setAuditorium(auditoriumService.getAuditoriumById(auditoriumId));
+        assignedEvent.setDate(date);
+        assignedEvents.add(assignedEvent);
     }
 }

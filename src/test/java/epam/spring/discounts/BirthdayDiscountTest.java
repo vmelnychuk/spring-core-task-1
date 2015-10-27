@@ -20,7 +20,8 @@ public class BirthdayDiscountTest {
 
     @Test
     public void testCalculateDiscount() throws Exception {
-        User user = new User("Peter", "P", "p@mail.com", "2000-03-29", "password");
+        Date birthday = new SimpleDateFormat("yyyy-MM-dd").parse("2000-03-29");
+        User user = new User("Peter", "P", "p@mail.com", "password", birthday);
         int discount10 = discountStrategy.calculateDiscount(user, null, new SimpleDateFormat("yyyy-MM-dd").parse("2015-03-29"));
         assertEquals(10, discount10);
         int discount0 = discountStrategy.calculateDiscount(user, null, new SimpleDateFormat("yyyy-MM-dd").parse("2015-04-29"));

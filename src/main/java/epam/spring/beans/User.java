@@ -12,17 +12,17 @@ public class User {
     private String lastName;
     private String email;
     private String password;
-    private Calendar birthday;
+    private Date birthday;
     Collection<Ticket> bookedTickets;
 
     public User() {
     }
 
-    public User(String firstName, String lastName, String email, String password, String birthday) {
+    public User(String firstName, String lastName, String email, String password, Date birthday) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.birthday = parseDate(birthday);
+        this.birthday = birthday;
         this.password = password;
     }
 
@@ -66,12 +66,12 @@ public class User {
         this.bookedTickets = bookedTickets;
     }
 
-    public Calendar getBirthday() {
+    public Date getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(String birthday) {
-        this.birthday = parseDate(birthday);
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
     }
 
     public int getId() {
@@ -120,23 +120,5 @@ public class User {
 
     public void addTicket(Ticket ticket) {
         bookedTickets.add(ticket);
-    }
-
-    /**
-     * Parses string in format yyyy-mm-dd e.g. 2015-10-26 to Calendar object
-     * @param date
-     * format yyyy-mm-dd
-     * @return calendar object
-     */
-    public Calendar parseDate(String date) {
-        Calendar calendar = Calendar.getInstance();
-        Date day = null;
-        try {
-            day = new SimpleDateFormat("yyyy-MM-dd").parse(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        calendar.setTime(day);
-        return calendar;
     }
 }

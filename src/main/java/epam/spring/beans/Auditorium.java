@@ -11,7 +11,7 @@ public class Auditorium {
     /**
      * additional price for VIP seat, count in percents
      */
-    private int vipAdditionalPrice = 50;
+    private int vipAdditionalPrice = 100;
 
     public Auditorium(String name, int numberOfSeats, Collection<Integer> vipSeats) {
         this.name = name;

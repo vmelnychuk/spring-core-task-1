@@ -4,8 +4,21 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+
+    <bean id="dateFormat" class="java.text.SimpleDateFormat">
+        <constructor-arg value="yyyy-MM-dd" />
+    </bean>
+
+    <bean id="dateTimeFormat" class="java.text.SimpleDateFormat">
+        <constructor-arg value="yyyy-MM-dd-HH-mm"/>
+    </bean>
+
     <bean id="user" class="epam.spring.beans.User" scope="prototype">
-        <property name="birthday" value="2015-10-26"/>
+        <property name="birthday">
+            <bean factory-bean="dateFormat" factory-method="parse">
+                <constructor-arg value="2000-10-26"/>
+            </bean>
+        </property>
         <property name="email" value="default"/>
     </bean>
 
@@ -14,7 +27,11 @@
         <constructor-arg value="Warnick"/>
         <constructor-arg value="r@mail.com"/>
         <constructor-arg value="1"/>
-        <constructor-arg value="1980-10-11"/>
+        <constructor-arg>
+            <bean factory-bean="dateFormat" factory-method="parse">
+                <constructor-arg value="1980-10-26"/>
+            </bean>
+        </constructor-arg>
     </bean>
 
     <bean id="user2" class="epam.spring.beans.User" scope="prototype">
@@ -22,7 +39,11 @@
         <constructor-arg value="Wynn"/>
         <constructor-arg value="d@mail.com"/>
         <constructor-arg value="2"/>
-        <constructor-arg value="1985-02-03"/>
+        <constructor-arg>
+            <bean factory-bean="dateFormat" factory-method="parse">
+                <constructor-arg value="1985-02-03"/>
+            </bean>
+        </constructor-arg>
     </bean>
 
     <bean id="user3" class="epam.spring.beans.User" scope="prototype">
@@ -30,7 +51,11 @@
         <constructor-arg value="Tiner"/>
         <constructor-arg value="a@mail.com"/>
         <constructor-arg value="3"/>
-        <constructor-arg value="1990-05-20"/>
+        <constructor-arg>
+            <bean factory-bean="dateFormat" factory-method="parse">
+                <constructor-arg value="1990-05-20"/>
+            </bean>
+        </constructor-arg>
     </bean>
 
     <bean id="event" class="epam.spring.beans.Event" scope="prototype">
@@ -40,48 +65,23 @@
         <constructor-arg index="0" value="The Martian"/>
         <constructor-arg index="1" value="100"/>
         <constructor-arg index="2" value="HIGH"/>
-        <property name="auditorium" ref="medium"/>
-        <property name="date">
-            <bean class="org.joda.time.DateTime">
-                <constructor-arg value="2015"/>
-                <constructor-arg value="10"/>
-                <constructor-arg value="25"/>
-                <constructor-arg value="15"/>
-                <constructor-arg value="0"/>
-            </bean>
-        </property>
+        <!--<property name="date">-->
+            <!--<bean factory-bean="dateTimeFormat" factory-method="parse">-->
+                <!--<constructor-arg value="2015-10-26-15-00"/>-->
+            <!--</bean>-->
+        <!--</property>-->
     </bean>
 
     <bean id="event2" class="epam.spring.beans.Event" scope="prototype">
         <constructor-arg index="0" value="Prometheus"/>
         <constructor-arg index="1" value="150"/>
         <constructor-arg index="2" value="MID"/>
-        <property name="auditorium" ref="big"/>
-        <property name="date">
-            <bean class="org.joda.time.DateTime">
-                <constructor-arg value="2015"/>
-                <constructor-arg value="10"/>
-                <constructor-arg value="25"/>
-                <constructor-arg value="14"/>
-                <constructor-arg value="0"/>
-            </bean>
-        </property>
     </bean>
 
     <bean id="event3" class="epam.spring.beans.Event" scope="prototype">
         <constructor-arg index="0" value="Interstellar"/>
         <constructor-arg index="1" value="70"/>
         <constructor-arg index="2" value="LOW"/>
-        <property name="auditorium" ref="small"/>
-        <property name="date">
-            <bean class="org.joda.time.DateTime">
-                <constructor-arg value="2015"/>
-                <constructor-arg value="10"/>
-                <constructor-arg value="25"/>
-                <constructor-arg value="14"/>
-                <constructor-arg value="0"/>
-            </bean>
-        </property>
     </bean>
 
     <bean id="ticket" class="epam.spring.beans.Ticket" scope="prototype">
