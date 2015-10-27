@@ -1,21 +1,20 @@
 package epam.spring.beans;
 
-import org.joda.time.DateTime;
-
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 
 public class Ticket {
     private Event event;
     private Date date;
-    private Collection<Integer> seats;
+    private Auditorium auditorium;
+    private int seat;
     private User user;
+    private int price;
 
-    public Ticket(Event event, Date date, Collection<Integer> seats, User user) {
+    public Ticket(Event event, Date date, Auditorium auditorium, int seat, User user) {
         this.event = event;
         this.date = date;
-        this.seats = seats;
+        this.auditorium = auditorium;
+        this.seat = seat;
         this.user = user;
     }
 
@@ -38,12 +37,12 @@ public class Ticket {
         this.date = date;
     }
 
-    public Collection<Integer> getSeats() {
-        return seats;
+    public int getSeat() {
+        return seat;
     }
 
-    public void setSeats(Collection<Integer> seats) {
-        this.seats = seats;
+    public void setSeat(int seat) {
+        this.seat = seat;
     }
 
     public User getUser() {
@@ -54,11 +53,31 @@ public class Ticket {
         this.user = user;
     }
 
-    public boolean overlap(Ticket ticket) {
-        if (!ticket.event.equals(this.event)) return false;
-        Collection<Integer> common = new ArrayList<Integer>(seats);
-        common.retainAll(ticket.seats);
-        if (common.size() != 0) return false;
-        return true;
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public Auditorium getAuditorium() {
+        return auditorium;
+    }
+
+    public void setAuditorium(Auditorium auditorium) {
+        this.auditorium = auditorium;
+    }
+
+    @Override
+    public String toString() {
+        return "Ticket{" +
+                "event=" + event.getName() +
+                ", date=" + date +
+                ", auditorium=" + auditorium.getName() +
+                ", seat=" + seat +
+                ", user=" + user.getFullName() +
+                ", price=" + price +
+                '}';
     }
 }

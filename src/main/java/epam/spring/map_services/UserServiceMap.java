@@ -13,11 +13,19 @@ public class UserServiceMap implements UserService {
         this.users = users;
     }
 
+    /**
+     * Register user in data base
+     * @param user
+     * @return userId or -1 if user with email already exists
+     */
     public int register(User user) {
-        int userId = users.size() + 1;
-        user.setId(userId);
-        users.put(userId, user);
-        return userId;
+        if (getUserByEmail(user.getEmail()) == null) {
+            int userId = users.size() + 1;
+            user.setId(userId);
+            users.put(userId, user);
+            return userId;
+        }
+        return -1;
     }
 
     public void remove(User user) {

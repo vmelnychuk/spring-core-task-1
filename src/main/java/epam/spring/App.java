@@ -1,14 +1,13 @@
 package epam.spring;
 
-import epam.spring.beans.Auditorium;
-import epam.spring.beans.Event;
-import epam.spring.beans.EventRating;
-import epam.spring.beans.User;
+import epam.spring.beans.*;
 import epam.spring.services.*;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import java.util.Scanner;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class App {
     private AuditoriumService auditoriumService;
@@ -16,7 +15,8 @@ public class App {
     private EventService eventService;
     private UserService userService;
 
-    private boolean isRunnig = true;
+    private boolean isRunning = true;
+    private int currentUserId = -1; // -1 not valid user
 
     private ConfigurableApplicationContext applicationContext;
 
@@ -52,117 +52,275 @@ public class App {
     }
 
     public void doWork() {
-        drawMenu();
+        drawMainMenu();
     }
 
     public static void main( String[] args ) {
         ConfigurableApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring.xml");
         App application = applicationContext.getBean("app", App.class);
         application.setApplicationContext(applicationContext);
-        while (application.isRunnig) {
+        while (application.isRunning) {
             application.doWork();
         }
         applicationContext.close();
     }
 
-    private void drawMenu() {
+    private void drawMainMenu() {
+        System.out.println("----Main Menu----");
         System.out.println("0 - Exit");
-        System.out.println("1 - User service");
-        System.out.println("2 - Add event");
-        System.out.println("3 - Book ticket");
+        System.out.println("1 - Enter as user");
+        System.out.println("2 - Enter as admin");
         System.out.print("Make your choice: ");
         Scanner scanner = new Scanner(System.in);
         int choice = scanner.nextInt();
         switch (choice) {
             case 0:
-                isRunnig = false;
+                isRunning = false;
                 break;
             case 1:
-                doUser();
+                drawUserMenu();
                 break;
             case 2:
-                doAddEvent();
-                break;
-            case 3:
-                doBookTicket();
+                drawAdminMenu();
                 break;
             default:
-                drawMenu();
+                drawMainMenu();
                 break;
         }
     }
 
-    private void doBookTicket() {
-    }
-
-    // TODO: add date parsing
-    private void doAddEvent() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Event Name: ");
-        String name = scanner.nextLine();
-        System.out.print("Event price: ");
-        int price = scanner.nextInt();
-        System.out.print("Event rating (high, mid, low): ");
-        String ratingString = scanner.nextLine().toUpperCase();
-        EventRating rating = EventRating.valueOf(ratingString);
-        Event event = eventService.create(name, price, rating);
-        System.out.print("Auditorium Name: ");
-        String auditoriumName = scanner.nextLine();
-        Auditorium auditorium = auditoriumService.getAuditoriumByName(auditoriumName);
-        System.out.print("Event Date (yyy-mm-dd): ");
-        String eventDate = scanner.nextLine();
-        System.out.print("Event Time(hh-mm): ");
-        String eventTime = scanner.nextLine();
-
-
-    }
-
-    private void doUser() {
-        System.out.println("0 - Go to main menu");
-        System.out.println("1 - add user");
-        System.out.println("2 - ");
-        System.out.println("3 - Book ticket");
+    private void drawUserMenu() {
+        System.out.println("----User Menu----");
+        System.out.println("0 - Exit to Main menu");
+        System.out.println("1 - Register");
+        System.out.println("2 - Login");
         System.out.print("Make your choice: ");
         Scanner scanner = new Scanner(System.in);
         int choice = scanner.nextInt();
         switch (choice) {
             case 0:
-                drawMenu();
+                drawMainMenu();
                 break;
             case 1:
-                doUser();
+                registerMenu();
                 break;
             case 2:
-                doAddEvent();
-                break;
-            case 3:
-                doBookTicket();
+                loginMenu();
                 break;
             default:
-                drawMenu();
+                drawUserMenu();
                 break;
         }
     }
-    private void addUser() {
+
+    private void loginMenu() {
+        System.out.println("---Login Menu----");
         Scanner scanner = new Scanner(System.in);
-        System.out.print("First Name: ");
-        String firstName = scanner.nextLine();
-        System.out.print("Last Name: ");
-        String lastName = scanner.nextLine();
-        System.out.print("Email: ");
+
+        System.out.print("email: ");
         String email = scanner.nextLine();
-        System.out.print("Birthday(yyyy-mm-dd): ");
-        String birthday = scanner.nextLine();
-        System.out.print("Password: ");
+
+        System.out.print("password: ");
         String password = scanner.nextLine();
+
+        User user = userService.getUserByEmail(email);
+        if (user != null && user.getPassword().equals(password)) {
+            System.out.println("logged in as " + user.getFullName());
+            currentUserId = user.getId();
+            drawUserActionMenu();
+        } else {
+            System.out.println("wrong password");
+            drawUserMenu();
+        }
+    }
+
+    private void drawUserActionMenu() {
+        System.out.println("----User Actions Menu----");
+        System.out.println("0 - Log out");
+        System.out.println("1 - View Events");
+        System.out.println("2 - Get ticket price and buy it");
+        System.out.print("Make your choice: ");
+        Scanner scanner = new Scanner(System.in);
+        int choice = scanner.nextInt();
+        switch (choice) {
+            case 0:
+                currentUserId = -1;
+                System.out.println("===logged out");
+                drawMainMenu();
+                break;
+            case 1:
+                showAllEvents();
+                drawUserActionMenu();
+                break;
+            case 2:
+                showPriceForEvent();
+                drawUserActionMenu();
+                break;
+            default:
+                drawUserActionMenu();
+                break;
+        }
+    }
+
+
+    private void showPriceForEvent() {
+        showAllEvents();
+        System.out.println("----Show Price Menu----");
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter name of event: ");
+        String eventName = scanner.nextLine();
+
+        System.out.print("Enter name of auditorium: ");
+        String auditoriumName = scanner.nextLine();
+
+        System.out.print("Enter seat number: ");
+        int seat = scanner.nextInt();
+
+        System.out.print("Enter date and time (yyyy-MM-dd-HH-mm): ");
+        String dateString = scanner.nextLine();
+        Date date = null;
+        try {
+            date = new SimpleDateFormat("yyyy-MM-dd-HH-mm").parse(dateString);
+        } catch (ParseException e) {
+            date = null;
+        }
+
+
+        Event event = eventService.getByName(eventName);
+        Auditorium auditorium = auditoriumService.getAuditoriumByName(auditoriumName);
+        User user = userService.getById(currentUserId);
+
+        Ticket ticket = bookingService.getTicketPrice(event, date, auditorium, seat, user);
+        System.out.println("price is " + ticket.getPrice());
+        System.out.print("Do you want to buy this ticket? (y/n):");
+        String answer = scanner.nextLine();
+        if(answer.equals("y")) {
+            bookingService.bookTicket(user, ticket);
+            System.out.println("the ticket was purchased");
+        }
+    }
+
+    private void showAllEvents() {
+        List<AssignedEvent> events = eventService.getAssignedEvents();
+        for(AssignedEvent assignedEvent : events) {
+            System.out.println(assignedEvent.toString());
+        }
+    }
+
+    private void registerMenu() {
+        System.out.println("----Register Menu----");
         User user = applicationContext.getBean("user", User.class);
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter first name: ");
+        String firstName = scanner.nextLine();
+
+        System.out.print("Enter last name: ");
+        String lastName = scanner.nextLine();
+
+        System.out.print("Enter email: ");
+        String email = scanner.nextLine();
+
+        System.out.print("Enter password: ");
+        String password = scanner.nextLine();
+
+        System.out.print("Enter birthday date (yyyy-mm-dd): ");
+        String birthday = scanner.nextLine();
+        Date birthdayDate = null;
+        try {
+            birthdayDate = new SimpleDateFormat("yyyy-MM-dd").parse(birthday);
+        } catch (ParseException e) {
+            birthdayDate = null;
+        }
+
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setEmail(email);
         user.setPassword(password);
-        user.setBirthday(birthday);
-        int id = userService.register(user);
-        System.out.println("id: " + id);
-        doUser();
+        user.setBirthday(birthdayDate);
+        int userId = userService.register(user);
+        System.out.println("You id is: " + userId);
+        if (userId == -1) {
+            System.out.println("User with email " + user.getEmail() + " is already exists");
+        }
+        drawUserMenu();
+    }
+
+    private void drawAdminMenu() {
+        System.out.println("----Admin Menu----");
+        System.out.println("0 - Exit to Main menu");
+        System.out.println("1 - Create event");
+        System.out.println("2 - View purchased tickets");
+        System.out.print("Make your choice: ");
+        Scanner scanner = new Scanner(System.in);
+        int choice = scanner.nextInt();
+        switch (choice) {
+            case 0:
+                drawMainMenu();
+                break;
+            case 1:
+                createEvent();
+                break;
+            case 2:
+                viewPurchasedTickets();
+                break;
+            default:
+                drawAdminMenu();
+                break;
+        }
+    }
+
+    private void viewPurchasedTickets() {
+        Collection<Ticket> tickets = bookingService.getPurchasedTickets();
+        System.out.println("----Purchased Tickets----");
+        for(Ticket ticket : tickets) {
+            System.out.println(ticket);
+        }
+        System.out.println("--------");
+        drawAdminMenu();
+    }
+
+    private void createEvent() {
+        System.out.println("----Create Event----");
+        Scanner scanner = new Scanner(System.in);
+
+        Event event = applicationContext.getBean("event", Event.class);
+
+        System.out.print("Name: ");
+        String name = scanner.nextLine();
+
+        System.out.print("Price: ");
+        int price = scanner.nextInt();
+
+        System.out.print("Event rating (high, mid, low): ");
+        String ratingString = scanner.nextLine().toUpperCase();
+        EventRating rating = EventRating.valueOf(ratingString);
+
+        event.setName(name);
+        event.setPrice(price);
+        event.setRating(rating);
+
+        int eventId = eventService.create(event);
+
+        System.out.print("Enter auditorium name: ");
+        Collection<Auditorium> auditoriums = auditoriumService.getAuditoriums();
+        for(Auditorium auditorium : auditoriums) {
+            System.out.println("auditorium " + auditorium.getName());
+        }
+        String auditoriumName = scanner.nextLine();
+        Auditorium auditorium = auditoriumService.getAuditoriumByName(auditoriumName);
+
+
+        System.out.print("Event date and time (yyyy-MM-dd-HH-mm): ");
+        String dateString = scanner.nextLine();
+        Date date = null;
+        try {
+            date = new SimpleDateFormat("yyyy-MM-dd-HH-mm").parse(dateString);
+        } catch (ParseException e) {
+            date = null;
+        }
+        eventService.assignAuditorium(eventId, auditorium, date);
+        drawAdminMenu();
     }
 }

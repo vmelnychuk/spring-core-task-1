@@ -23,10 +23,10 @@
     </bean>
 
     <bean id="user1" class="epam.spring.beans.User" scope="prototype">
-        <constructor-arg value="Roberto"/>
-        <constructor-arg value="Warnick"/>
-        <constructor-arg value="r@mail.com"/>
-        <constructor-arg value="1"/>
+        <constructor-arg value="admin"/>
+        <constructor-arg value="admin"/>
+        <constructor-arg value="admin"/>
+        <constructor-arg value="admin"/>
         <constructor-arg>
             <bean factory-bean="dateFormat" factory-method="parse">
                 <constructor-arg value="1980-10-26"/>
@@ -35,10 +35,10 @@
     </bean>
 
     <bean id="user2" class="epam.spring.beans.User" scope="prototype">
-        <constructor-arg value="Donte"/>
-        <constructor-arg value="Wynn"/>
-        <constructor-arg value="d@mail.com"/>
-        <constructor-arg value="2"/>
+        <constructor-arg value="event"/>
+        <constructor-arg value="creator"/>
+        <constructor-arg value="event"/>
+        <constructor-arg value="event"/>
         <constructor-arg>
             <bean factory-bean="dateFormat" factory-method="parse">
                 <constructor-arg value="1985-02-03"/>
@@ -47,10 +47,10 @@
     </bean>
 
     <bean id="user3" class="epam.spring.beans.User" scope="prototype">
-        <constructor-arg value="Armand"/>
-        <constructor-arg value="Tiner"/>
-        <constructor-arg value="a@mail.com"/>
-        <constructor-arg value="3"/>
+        <constructor-arg value="user"/>
+        <constructor-arg value="user"/>
+        <constructor-arg value="user"/>
+        <constructor-arg value="user"/>
         <constructor-arg>
             <bean factory-bean="dateFormat" factory-method="parse">
                 <constructor-arg value="1990-05-20"/>
@@ -65,11 +65,6 @@
         <constructor-arg index="0" value="The Martian"/>
         <constructor-arg index="1" value="100"/>
         <constructor-arg index="2" value="HIGH"/>
-        <!--<property name="date">-->
-            <!--<bean factory-bean="dateTimeFormat" factory-method="parse">-->
-                <!--<constructor-arg value="2015-10-26-15-00"/>-->
-            <!--</bean>-->
-        <!--</property>-->
     </bean>
 
     <bean id="event2" class="epam.spring.beans.Event" scope="prototype">
@@ -79,75 +74,87 @@
     </bean>
 
     <bean id="event3" class="epam.spring.beans.Event" scope="prototype">
-        <constructor-arg index="0" value="Interstellar"/>
-        <constructor-arg index="1" value="70"/>
-        <constructor-arg index="2" value="LOW"/>
+        <constructor-arg name="name" value="Interstellar"/>
+        <constructor-arg name="price" value="70"/>
+        <constructor-arg name="rating" value="LOW"/>
+    </bean>
+
+    <bean id="assignedevent" class="epam.spring.beans.AssignedEvent" scope="prototype">
+    </bean>
+
+    <bean id="assignedevent1" class="epam.spring.beans.AssignedEvent" scope="prototype">
+        <constructor-arg name="auditorium" ref="big"/>
+        <constructor-arg name="date">
+            <bean factory-bean="dateTimeFormat" factory-method="parse">
+                <constructor-arg value="2015-10-26-10-00"/>
+            </bean>
+        </constructor-arg>
+        <constructor-arg name="event" ref="event1"/>
+    </bean>
+
+    <bean id="assignedevent2" class="epam.spring.beans.AssignedEvent" scope="prototype">
+        <constructor-arg name="auditorium" ref="medium"/>
+        <constructor-arg name="date">
+            <bean factory-bean="dateTimeFormat" factory-method="parse">
+                <constructor-arg value="2015-10-26-11-00"/>
+            </bean>
+        </constructor-arg>
+        <constructor-arg name="event" ref="event2"/>
+    </bean>
+
+    <bean id="assignedevent3" class="epam.spring.beans.AssignedEvent" scope="prototype">
+        <constructor-arg name="auditorium" ref="small"/>
+        <constructor-arg name="date">
+            <bean factory-bean="dateTimeFormat" factory-method="parse">
+                <constructor-arg value="2015-10-26-12-00"/>
+            </bean>
+        </constructor-arg>
+        <constructor-arg name="event" ref="event3"/>
     </bean>
 
     <bean id="ticket" class="epam.spring.beans.Ticket" scope="prototype">
     </bean>
 
-    <bean id="ticket1" class="epam.spring.beans.Ticket">
-        <constructor-arg index="0" ref="event1"/>
-        <constructor-arg index="1">
-            <bean class="org.joda.time.DateTime">
-                <constructor-arg value="2015"/>
-                <constructor-arg value="10"/>
-                <constructor-arg value="25"/>
-                <constructor-arg value="14"/>
-                <constructor-arg value="0"/>
+
+    <bean id="ticket1" class="epam.spring.beans.Ticket" scope="prototype">
+        <constructor-arg name="event" ref="event1"/>
+        <constructor-arg name="date">
+            <bean factory-bean="dateTimeFormat" factory-method="parse">
+                <constructor-arg value="2015-10-26-10-00"/>
             </bean>
         </constructor-arg>
-        <constructor-arg index="2">
-            <list>
-                <value>1</value>
-                <value>2</value>
-                <value>3</value>
-            </list>
+        <constructor-arg name="seat" value="7">
         </constructor-arg>
-        <constructor-arg index="3" ref="user1"/>
+        <constructor-arg name="user" ref="user1"/>
+        <constructor-arg name="auditorium" ref="big"/>
+        <property name="price" value="100"/>
     </bean>
 
-    <bean id="ticket2" class="epam.spring.beans.Ticket">
-        <constructor-arg index="0" ref="event2"/>
-        <constructor-arg index="1">
-            <bean class="org.joda.time.DateTime">
-                <constructor-arg value="2015"/>
-                <constructor-arg value="10"/>
-                <constructor-arg value="25"/>
-                <constructor-arg value="14"/>
-                <constructor-arg value="0"/>
+    <bean id="ticket2" class="epam.spring.beans.Ticket" scope="prototype">
+        <constructor-arg name="event" ref="event2"/>
+        <constructor-arg name="date">
+            <bean factory-bean="dateTimeFormat" factory-method="parse">
+                <constructor-arg value="2015-10-26-11-00"/>
             </bean>
         </constructor-arg>
-        <constructor-arg index="2">
-            <list>
-                <value>1</value>
-                <value>2</value>
-                <value>3</value>
-            </list>
-        </constructor-arg>
-        <constructor-arg index="3" ref="user2"/>
+        <constructor-arg name="seat" value="3"/>
+        <constructor-arg name="user" ref="user2"/>
+        <constructor-arg name="auditorium" ref="medium"/>
+        <property name="price" value="90"/>
     </bean>
 
-    <bean id="ticket3" class="epam.spring.beans.Ticket">
-        <constructor-arg index="0" ref="event3"/>
-        <constructor-arg index="1">
-            <bean class="org.joda.time.DateTime">
-                <constructor-arg value="2015"/>
-                <constructor-arg value="10"/>
-                <constructor-arg value="25"/>
-                <constructor-arg value="14"/>
-                <constructor-arg value="0"/>
+    <bean id="ticket3" class="epam.spring.beans.Ticket" scope="prototype">
+        <constructor-arg name="event" ref="event3"/>
+        <constructor-arg name="date">
+            <bean factory-bean="dateTimeFormat" factory-method="parse">
+                <constructor-arg value="2015-10-26-13-00"/>
             </bean>
         </constructor-arg>
-        <constructor-arg index="2">
-            <list>
-                <value>1</value>
-                <value>2</value>
-                <value>3</value>
-            </list>
+        <constructor-arg name="seat" value="5">
         </constructor-arg>
-        <constructor-arg index="3" ref="user3"/>
+        <constructor-arg name="user" ref="user3"/>
+        <constructor-arg name="auditorium" ref="small"/>
+        <property name="price" value="50"/>
     </bean>
 
 </beans>

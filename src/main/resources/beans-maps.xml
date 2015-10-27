@@ -29,4 +29,10 @@
         <entry key="2" value-ref="ticket2"/>
         <entry key="3" value-ref="ticket3"/>
     </util:map>
+
+    <util:list id="assigned-event-list">
+        <ref bean="assignedevent1"/>
+        <ref bean="assignedevent2"/>
+        <ref bean="assignedevent3"/>
+    </util:list>
 </beans>

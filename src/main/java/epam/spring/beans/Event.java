@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class Event {
+    private int id;
     private String name;
     private int price;
     private EventRating rating;
@@ -41,6 +42,14 @@ public class Event {
 
     public void setRating(EventRating rating) {
         this.rating = rating;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override

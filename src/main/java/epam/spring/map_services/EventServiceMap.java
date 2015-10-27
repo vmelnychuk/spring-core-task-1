@@ -22,6 +22,13 @@ public class EventServiceMap implements EventService {
         return event;
     }
 
+    public int create(Event event) {
+        int eventId = events.size() + 1;
+        event.setId(eventId);
+        events.put(eventId, event);
+        return eventId;
+    }
+
     public void remove(Event event) {
         Iterator iterator = events.entrySet().iterator();
         while (iterator.hasNext()) {
@@ -42,15 +49,27 @@ public class EventServiceMap implements EventService {
         return null;
     }
 
+    public Event getById(int eventId) {
+        return events.get(eventId);
+    }
+
     public Collection<Event> getAll() {
         return events.values();
     }
 
-    public void assignAuditorium(int eventId, int auditoriumId, Date date) {
+    public void assignAuditorium(int eventId, Auditorium auditorium, Date date) {
         AssignedEvent assignedEvent = new AssignedEvent();
         assignedEvent.setEvent(events.get(eventId));
-        assignedEvent.setAuditorium(auditoriumService.getAuditoriumById(auditoriumId));
+        assignedEvent.setAuditorium(auditoriumService.getAuditoriumByName(auditorium.getName()));
         assignedEvent.setDate(date);
         assignedEvents.add(assignedEvent);
+    }
+
+    public List<AssignedEvent> getAssignedEvents() {
+        return assignedEvents;
+    }
+
+    public void setAssignedEvents(List<AssignedEvent> assignedEvents) {
+        this.assignedEvents = assignedEvents;
     }
 }

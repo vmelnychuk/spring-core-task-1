@@ -82,6 +82,10 @@ public class User {
         this.id = id;
     }
 
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
+
     /**
      * email field {@link User#getEmail()} is id of user
      * @param o is an other user to compare

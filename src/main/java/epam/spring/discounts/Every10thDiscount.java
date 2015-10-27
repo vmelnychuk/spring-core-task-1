@@ -15,7 +15,7 @@ public class Every10thDiscount implements DiscountStrategy {
 
     public int calculateDiscount(User user, Event event, Date date) {
         int discount = 0;
-        if (user.getBookedTickets() != null) {
+        if (user != null && user.getBookedTickets() != null) {
             if (user.getBookedTickets().size() % 10 == 0) discount = discountPercent;
         }
         return discount;

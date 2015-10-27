@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Properties;
 
 public class Auditorium {
+    private int id;
     private String name;
     private int numberOfSeats;
     private Collection<Integer> vipSeats;
@@ -12,6 +13,9 @@ public class Auditorium {
      * additional price for VIP seat, count in percents
      */
     private int vipAdditionalPrice = 100;
+
+    public Auditorium() {
+    }
 
     public Auditorium(String name, int numberOfSeats, Collection<Integer> vipSeats) {
         this.name = name;
@@ -60,6 +64,14 @@ public class Auditorium {
 
     public void setVipAdditionalPrice(int vipAdditionalPrice) {
         this.vipAdditionalPrice = vipAdditionalPrice;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override

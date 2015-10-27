@@ -3,6 +3,7 @@ package epam.spring.beans;
 import java.util.Date;
 
 public class AssignedEvent {
+    private int id;
     private Event event;
     private Auditorium auditorium;
     private Date date;
@@ -38,5 +39,22 @@ public class AssignedEvent {
 
     public void setEvent(Event event) {
         this.event = event;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "AssignedEvent{" +
+                "event=" + event.getName() +
+                ", auditorium=" + auditorium.getName() +
+                ", date=" + date +
+                '}';
     }
 }

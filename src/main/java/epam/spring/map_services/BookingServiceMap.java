@@ -18,23 +18,26 @@ public class BookingServiceMap implements BookingService {
         this.ticketsCount = 0;
     }
 
-    public int getTicketPrice(Event event, Date date, Collection<Integer> seats, User user) {
-        int totalPrice = 0;
+    public Ticket getTicketPrice(Event event, Date date, Auditorium auditorium, int seatsNumber, User user) {
         int basePrice = event.getPrice();
-        Auditorium auditorium = event.getAuditorium();
         int additionalPrice = auditorium.getVipAdditionalPrice();
-        for(Integer seat : seats) {
-            int seatPrice = 0;
-            if(auditorium.getVipSeats().contains(seat)) {
-                seatPrice = (basePrice * (100 + additionalPrice)) / 100;
-            } else {
-                seatPrice = basePrice;
-            }
-            totalPrice +=seatPrice;
+        int seatPrice = basePrice;
+        if(auditorium.getVipSeats().contains(seatsNumber)) {
+            seatPrice = (basePrice * (100 + additionalPrice)) / 100;
+        }
+        if (event.getRating() == EventRating.HIGH) {
+            seatPrice += basePrice * 0.2;
         }
         int discount = discountService.getDiscount(user, event, date);
-        totalPrice = (totalPrice * (100 - discount)) / 100;
-        return totalPrice;
+        seatPrice = (seatPrice * (100 - discount)) / 100;
+        Ticket ticket = new Ticket();
+        ticket.setEvent(event);
+        ticket.setDate(date);
+        ticket.setAuditorium(auditorium);
+        ticket.setSeat(seatsNumber);
+        ticket.setUser(user);
+        ticket.setPrice(seatPrice);
+        return ticket;
     }
 
     public void bookTicket(User user, Ticket ticket) {
@@ -53,5 +56,9 @@ public class BookingServiceMap implements BookingService {
             }
         }
         return tickets;
+    }
+
+    public Collection<Ticket> getPurchasedTickets() {
+        return bookedTickets.values();
     }
 }
