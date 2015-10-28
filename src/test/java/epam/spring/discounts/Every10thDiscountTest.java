@@ -1,5 +1,6 @@
 package epam.spring.discounts;
 
+import epam.spring.beans.Ticket;
 import epam.spring.beans.User;
 import epam.spring.services.DiscountStrategy;
 import org.junit.Before;
@@ -21,5 +22,12 @@ public class Every10thDiscountTest {
     public void testCalculateDiscount() throws Exception {
         int discount = discountStrategy.calculateDiscount(new User(), null, null);
         assertEquals(0, discount);
+
+        User user = new User();
+        for(int i = 0; i < 10; i++) {
+            user.addTicket(new Ticket());
+        }
+        int discount50 = discountStrategy.calculateDiscount(user, null, null);
+        assertEquals(50, discount50);
     }
 }
