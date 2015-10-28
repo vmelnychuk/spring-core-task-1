@@ -65,6 +65,14 @@ public class EventServiceMap implements EventService {
         assignedEvents.add(assignedEvent);
     }
 
+    public AuditoriumService getAuditoriumService() {
+        return auditoriumService;
+    }
+
+    public void setAuditoriumService(AuditoriumService auditoriumService) {
+        this.auditoriumService = auditoriumService;
+    }
+
     public List<AssignedEvent> getAssignedEvents() {
         return assignedEvents;
     }

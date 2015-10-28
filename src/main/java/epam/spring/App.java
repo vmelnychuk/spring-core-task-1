@@ -5,6 +5,7 @@ import epam.spring.services.*;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import javax.jws.soap.SOAPBinding;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -72,15 +73,15 @@ public class App {
         System.out.println("2 - Enter as admin");
         System.out.print("Make your choice: ");
         Scanner scanner = new Scanner(System.in);
-        int choice = scanner.nextInt();
+        String choice = scanner.nextLine();
         switch (choice) {
-            case 0:
+            case "0":
                 isRunning = false;
                 break;
-            case 1:
+            case "1":
                 drawUserMenu();
                 break;
-            case 2:
+            case "2":
                 drawAdminMenu();
                 break;
             default:
@@ -102,7 +103,7 @@ public class App {
                 drawMainMenu();
                 break;
             case 1:
-                registerMenu();
+                registerUserMenu();
                 break;
             case 2:
                 loginMenu();
@@ -110,6 +111,56 @@ public class App {
             default:
                 drawUserMenu();
                 break;
+        }
+    }
+
+    private void drawAdminMenu() {
+        System.out.println("----Admin Menu----");
+        System.out.println("0 - Exit to Main menu");
+        System.out.println("1 - Create event");
+        System.out.println("2 - View purchased tickets");
+        System.out.println("3 - View all events");
+        System.out.println("4 - View all users");
+        System.out.print("Make your choice: ");
+        Scanner scanner = new Scanner(System.in);
+        String choice = scanner.nextLine();
+        switch (choice) {
+            case "0":
+                drawMainMenu();
+                break;
+            case "1":
+                createEvent();
+                drawAdminMenu();
+                break;
+            case "2":
+                viewPurchasedTickets();
+                drawAdminMenu();
+                break;
+            case "3":
+                viewAllEvents();
+                drawAdminMenu();
+                break;
+            case "4":
+                viewAllUsers();
+                drawAdminMenu();
+                break;
+            default:
+                drawAdminMenu();
+                break;
+        }
+    }
+
+    private void viewAllUsers() {
+        Collection<User> users= userService.getAll();
+        for(User user : users) {
+            System.out.println(user.toString());
+        }
+    }
+
+    private void viewAllEvents() {
+        Collection<Event> events = eventService.getAll();
+        for(Event event : events) {
+            System.out.println(event.toString());
         }
     }
 
@@ -127,6 +178,7 @@ public class App {
         if (user != null && user.getPassword().equals(password)) {
             System.out.println("logged in as " + user.getFullName());
             currentUserId = user.getId();
+            System.out.println("curId " + currentUserId);
             drawUserActionMenu();
         } else {
             System.out.println("wrong password");
@@ -141,19 +193,19 @@ public class App {
         System.out.println("2 - Get ticket price and buy it");
         System.out.print("Make your choice: ");
         Scanner scanner = new Scanner(System.in);
-        int choice = scanner.nextInt();
+        String choice = scanner.nextLine();
         switch (choice) {
-            case 0:
+            case "0":
                 currentUserId = -1;
                 System.out.println("===logged out");
                 drawMainMenu();
                 break;
-            case 1:
+            case "1":
                 showAllEvents();
                 drawUserActionMenu();
                 break;
-            case 2:
-                showPriceForEvent();
+            case "2":
+                showPriceForEventAndBuyTicket();
                 drawUserActionMenu();
                 break;
             default:
@@ -162,8 +214,7 @@ public class App {
         }
     }
 
-
-    private void showPriceForEvent() {
+    private void showPriceForEventAndBuyTicket() {
         showAllEvents();
         System.out.println("----Show Price Menu----");
         Scanner scanner = new Scanner(System.in);
@@ -175,8 +226,7 @@ public class App {
         String auditoriumName = scanner.nextLine();
 
         System.out.print("Enter seat number: ");
-        int seat = scanner.nextInt();
-
+        int seat = Integer.parseInt(scanner.nextLine());
         System.out.print("Enter date and time (yyyy-MM-dd-HH-mm): ");
         String dateString = scanner.nextLine();
         Date date = null;
@@ -186,10 +236,11 @@ public class App {
             date = null;
         }
 
-
         Event event = eventService.getByName(eventName);
         Auditorium auditorium = auditoriumService.getAuditoriumByName(auditoriumName);
         User user = userService.getById(currentUserId);
+
+        System.out.println("user: " + user.toString());
 
         Ticket ticket = bookingService.getTicketPrice(event, date, auditorium, seat, user);
         System.out.println("price is " + ticket.getPrice());
@@ -208,7 +259,7 @@ public class App {
         }
     }
 
-    private void registerMenu() {
+    private void registerUserMenu() {
         System.out.println("----Register Menu----");
         User user = applicationContext.getBean("user", User.class);
         Scanner scanner = new Scanner(System.in);
@@ -228,6 +279,7 @@ public class App {
         System.out.print("Enter birthday date (yyyy-mm-dd): ");
         String birthday = scanner.nextLine();
         Date birthdayDate = null;
+
         try {
             birthdayDate = new SimpleDateFormat("yyyy-MM-dd").parse(birthday);
         } catch (ParseException e) {
@@ -247,29 +299,6 @@ public class App {
         drawUserMenu();
     }
 
-    private void drawAdminMenu() {
-        System.out.println("----Admin Menu----");
-        System.out.println("0 - Exit to Main menu");
-        System.out.println("1 - Create event");
-        System.out.println("2 - View purchased tickets");
-        System.out.print("Make your choice: ");
-        Scanner scanner = new Scanner(System.in);
-        int choice = scanner.nextInt();
-        switch (choice) {
-            case 0:
-                drawMainMenu();
-                break;
-            case 1:
-                createEvent();
-                break;
-            case 2:
-                viewPurchasedTickets();
-                break;
-            default:
-                drawAdminMenu();
-                break;
-        }
-    }
 
     private void viewPurchasedTickets() {
         Collection<Ticket> tickets = bookingService.getPurchasedTickets();
@@ -292,6 +321,7 @@ public class App {
 
         System.out.print("Price: ");
         int price = scanner.nextInt();
+        scanner.nextLine();
 
         System.out.print("Event rating (high, mid, low): ");
         String ratingString = scanner.nextLine().toUpperCase();
@@ -303,14 +333,13 @@ public class App {
 
         int eventId = eventService.create(event);
 
-        System.out.print("Enter auditorium name: ");
+        System.out.println("Enter auditorium name: ");
         Collection<Auditorium> auditoriums = auditoriumService.getAuditoriums();
         for(Auditorium auditorium : auditoriums) {
-            System.out.println("auditorium " + auditorium.getName());
+            System.out.println("auditorium: " + auditorium.getName());
         }
         String auditoriumName = scanner.nextLine();
         Auditorium auditorium = auditoriumService.getAuditoriumByName(auditoriumName);
-
 
         System.out.print("Event date and time (yyyy-MM-dd-HH-mm): ");
         String dateString = scanner.nextLine();
@@ -321,6 +350,5 @@ public class App {
             date = null;
         }
         eventService.assignAuditorium(eventId, auditorium, date);
-        drawAdminMenu();
     }
 }

@@ -13,4 +13,5 @@ public interface UserService {
     User getUserByEmail(String email);
     Collection<User> getUsersByName(String firstName, String lastName);
     Collection<Ticket> getBookedTickets(User user);
+    Collection<User> getAll();
 }

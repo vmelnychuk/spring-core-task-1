@@ -32,6 +32,7 @@
                 <constructor-arg value="1980-10-26"/>
             </bean>
         </constructor-arg>
+        <property name="id" value="1"/>
     </bean>
 
     <bean id="user2" class="epam.spring.beans.User" scope="prototype">
@@ -44,6 +45,7 @@
                 <constructor-arg value="1985-02-03"/>
             </bean>
         </constructor-arg>
+        <property name="id" value="2"/>
     </bean>
 
     <bean id="user3" class="epam.spring.beans.User" scope="prototype">
@@ -56,6 +58,7 @@
                 <constructor-arg value="1990-05-20"/>
             </bean>
         </constructor-arg>
+        <property name="id" value="3"/>
     </bean>
 
     <bean id="event" class="epam.spring.beans.Event" scope="prototype">

@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.LinkedList;
 
 public class User {
     private int id;
@@ -16,6 +17,7 @@ public class User {
     Collection<Ticket> bookedTickets;
 
     public User() {
+        bookedTickets = new LinkedList<Ticket>();
     }
 
     public User(String firstName, String lastName, String email, String password, Date birthday) {
@@ -24,6 +26,7 @@ public class User {
         this.email = email;
         this.birthday = birthday;
         this.password = password;
+        bookedTickets = new LinkedList<Ticket>();
     }
 
     public String getPassword() {
@@ -86,6 +89,10 @@ public class User {
         return firstName + " " + lastName;
     }
 
+    public void addTicket(Ticket ticket) {
+        bookedTickets.add(ticket);
+    }
+
     /**
      * email field {@link User#getEmail()} is id of user
      * @param o is an other user to compare
@@ -120,9 +127,5 @@ public class User {
                 ", birthday=" + birthday +
                 ", bookedTickets=" + bookedTickets +
                 '}';
-    }
-
-    public void addTicket(Ticket ticket) {
-        bookedTickets.add(ticket);
     }
 }

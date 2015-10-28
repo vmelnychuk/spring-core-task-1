@@ -64,4 +64,9 @@ public class UserServiceMap implements UserService {
         User storedUser = users.get(user.getId());
         return storedUser.getBookedTickets();
     }
+
+    @Override
+    public Collection<User> getAll() {
+        return users.values();
+    }
 }
