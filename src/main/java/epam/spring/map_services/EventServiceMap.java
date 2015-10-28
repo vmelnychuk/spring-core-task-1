@@ -1,6 +1,9 @@
 package epam.spring.map_services;
 
-import epam.spring.beans.*;
+import epam.spring.beans.AssignedEvent;
+import epam.spring.beans.Auditorium;
+import epam.spring.beans.Event;
+import epam.spring.beans.EventRating;
 import epam.spring.services.AuditoriumService;
 import epam.spring.services.EventService;
 

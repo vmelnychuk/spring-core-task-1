@@ -4,7 +4,6 @@ import epam.spring.beans.Auditorium;
 import epam.spring.services.AuditoriumService;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 
 public class AuditoriumServiceMap implements AuditoriumService {

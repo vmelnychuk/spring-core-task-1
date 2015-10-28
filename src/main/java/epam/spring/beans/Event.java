@@ -1,10 +1,5 @@
 package epam.spring.beans;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-
 public class Event {
     private int id;
     private String name;

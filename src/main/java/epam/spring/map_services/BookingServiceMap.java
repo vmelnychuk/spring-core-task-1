@@ -3,9 +3,11 @@ package epam.spring.map_services;
 import epam.spring.beans.*;
 import epam.spring.services.BookingService;
 import epam.spring.services.DiscountService;
-import org.joda.time.DateTime;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.Map;
 
 public class BookingServiceMap implements BookingService {
     private DiscountService discountService;

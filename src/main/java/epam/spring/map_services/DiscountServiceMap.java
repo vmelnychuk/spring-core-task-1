@@ -4,12 +4,9 @@ import epam.spring.beans.Event;
 import epam.spring.beans.User;
 import epam.spring.services.DiscountService;
 import epam.spring.services.DiscountStrategy;
-import org.joda.time.DateTime;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 public class DiscountServiceMap implements DiscountService {
     private Collection<DiscountStrategy> discountStrategies;

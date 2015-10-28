@@ -4,7 +4,9 @@ import epam.spring.beans.Ticket;
 import epam.spring.beans.User;
 import epam.spring.services.UserService;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Map;
 
 public class UserServiceMap implements UserService {
     private Map<Integer, User> users;

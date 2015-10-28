@@ -1,14 +1,19 @@
 package epam.spring;
 
 import epam.spring.beans.*;
-import epam.spring.services.*;
+import epam.spring.services.AuditoriumService;
+import epam.spring.services.BookingService;
+import epam.spring.services.EventService;
+import epam.spring.services.UserService;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import javax.jws.soap.SOAPBinding;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+import java.util.Scanner;
 
 public class App {
     private AuditoriumService auditoriumService;
