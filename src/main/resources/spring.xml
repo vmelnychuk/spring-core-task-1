@@ -4,6 +4,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <import resource="services.xml"/>
+    <import resource="aspects.xml"/>
 
     <bean id="app" class="epam.spring.App">
         <constructor-arg ref="auditoriumService"/>
@@ -11,4 +12,5 @@
         <constructor-arg ref="eventService"/>
         <constructor-arg ref="userService"/>
     </bean>
+
 </beans>

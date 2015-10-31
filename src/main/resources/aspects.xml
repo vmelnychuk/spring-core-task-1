@@ -1,0 +1,24 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <aop:aspectj-autoproxy/>
+
+    <bean id="counterAspect" class="epam.spring.aspects.CounterAspect">
+        <constructor-arg>
+            <map></map>
+        </constructor-arg>
+    </bean>
+    <bean id="discountAspect" class="epam.spring.aspects.DiscountAspect">
+        <constructor-arg>
+            <map>
+            </map>
+        </constructor-arg>
+    </bean>
+    <bean id="luckyWinnerAspect" class="epam.spring.aspects.LuckyWinnerAspect"/>
+
+</beans>
