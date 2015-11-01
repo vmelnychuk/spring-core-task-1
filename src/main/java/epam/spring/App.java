@@ -1,6 +1,7 @@
 package epam.spring;
 
 import epam.spring.aspects.CounterAspect;
+import epam.spring.aspects.DiscountAspect;
 import epam.spring.beans.*;
 import epam.spring.services.AuditoriumService;
 import epam.spring.services.BookingService;
@@ -71,6 +72,9 @@ public class App {
         }
         CounterAspect counterAspect = applicationContext.getBean("counterAspect", CounterAspect.class);
         System.out.println(counterAspect.toString());
+
+        DiscountAspect discountAspect = applicationContext.getBean("discountAspect", DiscountAspect.class);
+        System.out.println(discountAspect.toString());
         applicationContext.close();
     }
 

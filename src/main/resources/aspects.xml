@@ -20,11 +20,12 @@
         </constructor-arg>
     </bean>
     <bean id="discountAspect" class="epam.spring.aspects.DiscountAspect">
-        <constructor-arg>
-            <map>
-            </map>
+        <constructor-arg name="discountsCounter">
+            <map></map>
+        </constructor-arg>
+        <constructor-arg name="discountPerUser">
+            <map></map>
         </constructor-arg>
     </bean>
-    <bean id="luckyWinnerAspect" class="epam.spring.aspects.LuckyWinnerAspect"/>
 
 </beans>
