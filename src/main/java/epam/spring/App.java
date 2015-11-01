@@ -1,5 +1,6 @@
 package epam.spring;
 
+import epam.spring.aspects.CounterAspect;
 import epam.spring.beans.*;
 import epam.spring.services.AuditoriumService;
 import epam.spring.services.BookingService;
@@ -68,6 +69,8 @@ public class App {
         while (application.isRunning) {
             application.doWork();
         }
+        CounterAspect counterAspect = applicationContext.getBean("counterAspect", CounterAspect.class);
+        System.out.println(counterAspect.toString());
         applicationContext.close();
     }
 
@@ -102,15 +105,15 @@ public class App {
         System.out.println("2 - Login");
         System.out.print("Make your choice: ");
         Scanner scanner = new Scanner(System.in);
-        int choice = scanner.nextInt();
+        String choice = scanner.nextLine();
         switch (choice) {
-            case 0:
+            case "0":
                 drawMainMenu();
                 break;
-            case 1:
+            case "1":
                 registerUserMenu();
                 break;
-            case 2:
+            case "2":
                 loginMenu();
                 break;
             default:

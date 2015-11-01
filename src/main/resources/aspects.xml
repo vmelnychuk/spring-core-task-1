@@ -12,6 +12,12 @@
         <constructor-arg>
             <map></map>
         </constructor-arg>
+        <constructor-arg>
+            <map></map>
+        </constructor-arg>
+        <constructor-arg>
+            <map></map>
+        </constructor-arg>
     </bean>
     <bean id="discountAspect" class="epam.spring.aspects.DiscountAspect">
         <constructor-arg>
