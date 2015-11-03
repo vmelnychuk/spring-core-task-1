@@ -27,5 +27,10 @@
             <map></map>
         </constructor-arg>
     </bean>
+    <bean id="luckyWinnerAspect" class="epam.spring.aspects.LuckyWinnerAspect">
+        <constructor-arg>
+            <map></map>
+        </constructor-arg>
+    </bean>
 
 </beans>

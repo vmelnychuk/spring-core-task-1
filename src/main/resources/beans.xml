@@ -87,31 +87,16 @@
 
     <bean id="assignedevent1" class="epam.spring.beans.AssignedEvent" scope="prototype">
         <constructor-arg name="auditorium" ref="big"/>
-        <constructor-arg name="date">
-            <bean factory-bean="dateTimeFormat" factory-method="parse">
-                <constructor-arg value="2015-10-26-10-00"/>
-            </bean>
-        </constructor-arg>
         <constructor-arg name="event" ref="event1"/>
     </bean>
 
     <bean id="assignedevent2" class="epam.spring.beans.AssignedEvent" scope="prototype">
         <constructor-arg name="auditorium" ref="medium"/>
-        <constructor-arg name="date">
-            <bean factory-bean="dateTimeFormat" factory-method="parse">
-                <constructor-arg value="2015-10-26-11-00"/>
-            </bean>
-        </constructor-arg>
         <constructor-arg name="event" ref="event2"/>
     </bean>
 
     <bean id="assignedevent3" class="epam.spring.beans.AssignedEvent" scope="prototype">
         <constructor-arg name="auditorium" ref="small"/>
-        <constructor-arg name="date">
-            <bean factory-bean="dateTimeFormat" factory-method="parse">
-                <constructor-arg value="2015-10-26-12-00"/>
-            </bean>
-        </constructor-arg>
         <constructor-arg name="event" ref="event3"/>
     </bean>
 

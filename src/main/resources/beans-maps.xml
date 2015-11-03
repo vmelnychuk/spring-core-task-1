@@ -30,9 +30,22 @@
         <entry key="3" value-ref="ticket3"/>
     </util:map>
 
-    <util:list id="assigned-event-list">
-        <ref bean="assignedevent1"/>
-        <ref bean="assignedevent2"/>
-        <ref bean="assignedevent3"/>
-    </util:list>
+    <util:map id="assigned-event-map">
+        <entry>
+            <key>
+                <bean factory-bean="dateTimeFormat" factory-method="parse">
+                    <constructor-arg value="2015-10-26-10-00"/>
+                </bean>
+            </key>
+            <ref bean="assignedevent1"/>
+        </entry>
+        <entry>
+            <key>
+                <bean factory-bean="dateTimeFormat" factory-method="parse">
+                    <constructor-arg value="2015-10-26-11-00"/>
+                </bean>
+            </key>
+            <ref bean="assignedevent2"/>
+        </entry>
+    </util:map>
 </beans>

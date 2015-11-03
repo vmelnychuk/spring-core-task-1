@@ -4,20 +4,19 @@ import epam.spring.beans.*;
 import epam.spring.services.BookingService;
 import epam.spring.services.DiscountService;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Map;
+import java.util.*;
 
 public class BookingServiceMap implements BookingService {
     private DiscountService discountService;
     private Map<Integer, Ticket> bookedTickets;
+    private Map<Event, List<Ticket>> bookedTicketsForEvent;
     private int ticketsCount;
 
     public BookingServiceMap(DiscountService discountService, Map<Integer, Ticket> bookedTickets) {
         this.discountService = discountService;
         this.bookedTickets = bookedTickets;
         this.ticketsCount = 0;
+        this.bookedTicketsForEvent = new HashMap<>();
     }
 
     public Ticket getTicketPrice(Event event, Date date, Auditorium auditorium, int seatsNumber, User user) {
@@ -43,21 +42,28 @@ public class BookingServiceMap implements BookingService {
     }
 
     public void bookTicket(User user, Ticket ticket) {
-        ticket.setUser(user);
-        user.addTicket(ticket);
+        if (user != null) {
+            ticket.setUser(user);
+            user.addTicket(ticket);
+        }
         bookedTickets.put(++ticketsCount, ticket);
+        Event event = ticket.getEvent();
+        if(!bookedTicketsForEvent.containsKey(event)) {
+            bookedTicketsForEvent.put(event, new ArrayList<Ticket>());
+        }
+        List<Ticket> ticketsForEvent = bookedTicketsForEvent.get(event);
+        ticketsForEvent.add(ticket);
     }
 
     public Collection<Ticket> getTicketsForEvent(Event event, Date date) {
-        Collection<Ticket> tickets = new ArrayList<Ticket>();
-        for(Map.Entry<Integer, Ticket> entry : bookedTickets.entrySet()) {
-            Ticket ticket = entry.getValue();
-            if(ticket.getDate().equals(date)
-                    && ticket.getEvent().equals(event)) {
-                tickets.add(ticket);
+        Collection<Ticket> bookedTickets = bookedTicketsForEvent.get(event);
+        Collection<Ticket> ticketsForDate = new ArrayList<Ticket>();
+        for(Ticket ticket : bookedTickets) {
+            if(ticket.getDate().equals(date)) {
+                ticketsForDate.add(ticket);
             }
         }
-        return tickets;
+        return ticketsForDate;
     }
 
     public Collection<Ticket> getPurchasedTickets() {

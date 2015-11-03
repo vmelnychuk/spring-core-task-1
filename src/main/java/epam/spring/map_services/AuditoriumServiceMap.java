@@ -32,7 +32,10 @@ public class AuditoriumServiceMap implements AuditoriumService {
 
     public int getSeatsNumber(Auditorium auditorium) {
         Auditorium foundAuditorium = findAuditorium(auditorium);
-        return foundAuditorium.getNumberOfSeats();
+        if (foundAuditorium != null) {
+            return foundAuditorium.getNumberOfSeats();
+        }
+        return -1;
     }
 
     public Collection<Integer> getVipSeats(Auditorium auditorium) {

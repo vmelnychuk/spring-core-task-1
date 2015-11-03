@@ -8,6 +8,7 @@ import epam.spring.beans.EventRating;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public interface EventService {
     Event create(String name, int price, EventRating rating);
@@ -16,6 +17,6 @@ public interface EventService {
     Event getByName(String name);
     Event getById(int eventId);
     Collection<Event> getAll();
-    void assignAuditorium(int eventId, Auditorium auditorium, Date date);
-    List<AssignedEvent> getAssignedEvents();
+    void assignAuditorium(Event event, Auditorium auditorium, Date date);
+    Map<Date, AssignedEvent> getAssignedEvents();
 }

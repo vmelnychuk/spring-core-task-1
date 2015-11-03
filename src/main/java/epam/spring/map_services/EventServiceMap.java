@@ -11,7 +11,7 @@ import java.util.*;
 
 public class EventServiceMap implements EventService {
     private Map<Integer, Event> events;
-    private List<AssignedEvent> assignedEvents;
+    private Map<Date, AssignedEvent> assignedEvents;
     private AuditoriumService auditoriumService;
 
     public EventServiceMap(Map<Integer, Event> events) {
@@ -60,12 +60,11 @@ public class EventServiceMap implements EventService {
         return events.values();
     }
 
-    public void assignAuditorium(int eventId, Auditorium auditorium, Date date) {
+    public void assignAuditorium(Event event, Auditorium auditorium, Date date) {
         AssignedEvent assignedEvent = new AssignedEvent();
-        assignedEvent.setEvent(events.get(eventId));
+        assignedEvent.setEvent(getByName(event.getName()));
         assignedEvent.setAuditorium(auditoriumService.getAuditoriumByName(auditorium.getName()));
-        assignedEvent.setDate(date);
-        assignedEvents.add(assignedEvent);
+        assignedEvents.put(date, assignedEvent);
     }
 
     public AuditoriumService getAuditoriumService() {
@@ -76,11 +75,12 @@ public class EventServiceMap implements EventService {
         this.auditoriumService = auditoriumService;
     }
 
-    public List<AssignedEvent> getAssignedEvents() {
+    @Override
+    public Map<Date, AssignedEvent> getAssignedEvents() {
         return assignedEvents;
     }
 
-    public void setAssignedEvents(List<AssignedEvent> assignedEvents) {
+    public void setAssignedEvents(Map<Date, AssignedEvent> assignedEvents) {
         this.assignedEvents = assignedEvents;
     }
 }

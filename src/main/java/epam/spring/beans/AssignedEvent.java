@@ -3,18 +3,15 @@ package epam.spring.beans;
 import java.util.Date;
 
 public class AssignedEvent {
-    private int id;
     private Event event;
     private Auditorium auditorium;
-    private Date date;
 
     public AssignedEvent() {
     }
 
-    public AssignedEvent(Event event, Auditorium auditorium, Date date) {
-        this.event = event;
-        this.date = date;
+    public AssignedEvent(Auditorium auditorium, Event event) {
         this.auditorium = auditorium;
+        this.event = event;
     }
 
     public Auditorium getAuditorium() {
@@ -25,14 +22,6 @@ public class AssignedEvent {
         this.auditorium = auditorium;
     }
 
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
     public Event getEvent() {
         return event;
     }
@@ -41,20 +30,11 @@ public class AssignedEvent {
         this.event = event;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     @Override
     public String toString() {
         return "AssignedEvent{" +
-                "event=" + event.getName() +
-                ", auditorium=" + auditorium.getName() +
-                ", date=" + date +
+                "auditorium=" + auditorium +
+                ", event=" + event +
                 '}';
     }
 }

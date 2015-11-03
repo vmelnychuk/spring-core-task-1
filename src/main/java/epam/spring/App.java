@@ -2,6 +2,7 @@ package epam.spring;
 
 import epam.spring.aspects.CounterAspect;
 import epam.spring.aspects.DiscountAspect;
+import epam.spring.aspects.LuckyWinnerAspect;
 import epam.spring.beans.*;
 import epam.spring.services.AuditoriumService;
 import epam.spring.services.BookingService;
@@ -12,10 +13,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class App {
     private AuditoriumService auditoriumService;
@@ -75,6 +73,10 @@ public class App {
 
         DiscountAspect discountAspect = applicationContext.getBean("discountAspect", DiscountAspect.class);
         System.out.println(discountAspect.toString());
+
+        LuckyWinnerAspect luckyWinnerAspect = applicationContext.getBean("luckyWinnerAspect", LuckyWinnerAspect.class);
+        System.out.println(luckyWinnerAspect.toString());
+
         applicationContext.close();
     }
 
@@ -252,8 +254,6 @@ public class App {
         Auditorium auditorium = auditoriumService.getAuditoriumByName(auditoriumName);
         User user = userService.getById(currentUserId);
 
-        System.out.println("user: " + user.toString());
-
         Ticket ticket = bookingService.getTicketPrice(event, date, auditorium, seat, user);
         System.out.println("price is " + ticket.getPrice());
         System.out.print("Do you want to buy this ticket? (y/n):");
@@ -265,9 +265,9 @@ public class App {
     }
 
     private void showAllEvents() {
-        List<AssignedEvent> events = eventService.getAssignedEvents();
-        for(AssignedEvent assignedEvent : events) {
-            System.out.println(assignedEvent.toString());
+        Map<Date, AssignedEvent> events = eventService.getAssignedEvents();
+        for(Map.Entry<Date, AssignedEvent> entry : events.entrySet()) {
+            System.out.println("Date:" + entry.getKey() + " " + entry.getValue());
         }
     }
 
@@ -361,6 +361,7 @@ public class App {
         } catch (ParseException e) {
             date = null;
         }
-        eventService.assignAuditorium(eventId, auditorium, date);
+        Event eventToAssign = eventService.getById(eventId);
+        eventService.assignAuditorium(eventToAssign, auditorium, date);
     }
 }

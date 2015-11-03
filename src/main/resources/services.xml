@@ -13,7 +13,7 @@
     <bean id="eventService" class="epam.spring.map_services.EventServiceMap">
         <constructor-arg ref="events-map"/>
         <property name="auditoriumService" ref="auditoriumService"/>
-        <property name="assignedEvents" ref="assigned-event-list"/>
+        <property name="assignedEvents" ref="assigned-event-map"/>
     </bean>
 
     <bean id="auditoriumService" class="epam.spring.map_services.AuditoriumServiceMap">

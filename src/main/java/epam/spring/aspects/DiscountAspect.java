@@ -42,7 +42,6 @@ public class DiscountAspect {
                 discountPerUser.put(discountPerUserKey, 0);
             }
             discountPerUser.put(discountPerUserKey, discountPerUser.get(discountPerUserKey) + 1);
-
         }
     }
 
