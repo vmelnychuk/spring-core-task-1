@@ -5,9 +5,10 @@
 
     <import resource="discount.xml"/>
     <import resource="beans-maps.xml"/>
+    <import resource="jdbc.xml"/>
 
-    <bean id="userService" class="epam.spring.map_services.UserServiceMap">
-        <constructor-arg ref="users-map"/>
+    <bean id="userService" class="epam.spring.jdbc_services.UserServiceJdbc">
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
     </bean>
 
     <bean id="eventService" class="epam.spring.map_services.EventServiceMap">
