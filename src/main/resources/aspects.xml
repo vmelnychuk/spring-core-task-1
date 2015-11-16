@@ -6,19 +6,14 @@
        http://www.springframework.org/schema/aop
        http://www.springframework.org/schema/aop/spring-aop.xsd">
 
+    <import resource="jdbc.xml"/>
+
     <aop:aspectj-autoproxy/>
 
-    <bean id="counterAspect" class="epam.spring.aspects.CounterAspect">
-        <constructor-arg>
-            <map></map>
-        </constructor-arg>
-        <constructor-arg>
-            <map></map>
-        </constructor-arg>
-        <constructor-arg>
-            <map></map>
-        </constructor-arg>
+    <bean id="counterAspect" class="epam.spring.aspects.CounterAspect" init-method="init" destroy-method="destroy">
+        <constructor-arg ref="jdbcTemplate"/>
     </bean>
+
     <bean id="discountAspect" class="epam.spring.aspects.DiscountAspect">
         <constructor-arg name="discountsCounter">
             <map></map>

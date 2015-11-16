@@ -3,12 +3,14 @@ package epam.spring.beans;
 import java.util.Date;
 
 public class Ticket {
+    private int id;
     private Event event;
     private Date date;
     private Auditorium auditorium;
     private int seat;
     private User user;
     private int price;
+    private int assignedEventId;
 
     public Ticket(Event event, Date date, Auditorium auditorium, int seat, User user) {
         this.event = event;
@@ -69,15 +71,33 @@ public class Ticket {
         this.auditorium = auditorium;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getAssignedEventId() {
+        return assignedEventId;
+    }
+
+    public void setAssignedEventId(int assignedEventId) {
+        this.assignedEventId = assignedEventId;
+    }
+
     @Override
     public String toString() {
         return "Ticket{" +
-                "event=" + event.getName() +
+                "id=" + id +
+                ", event=" + event +
                 ", date=" + date +
-                ", auditorium=" + auditorium.getName() +
+                ", auditorium=" + auditorium +
                 ", seat=" + seat +
-                ", user=" + user.getFullName() +
+                ", user=" + user +
                 ", price=" + price +
+                ", assignedEventId=" + assignedEventId +
                 '}';
     }
 }

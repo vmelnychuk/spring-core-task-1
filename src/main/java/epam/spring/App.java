@@ -26,7 +26,10 @@ public class App {
 
     private ConfigurableApplicationContext applicationContext;
 
-    public App(AuditoriumService auditoriumService, BookingService bookingService, EventService eventService, UserService userService) {
+    public App(AuditoriumService auditoriumService,
+               BookingService bookingService,
+               EventService eventService,
+               UserService userService) {
         this.auditoriumService = auditoriumService;
         this.bookingService = bookingService;
         this.eventService = eventService;
@@ -233,28 +236,16 @@ public class App {
         System.out.println("----Show Price Menu----");
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Enter name of event: ");
-        String eventName = scanner.nextLine();
-
-        System.out.print("Enter name of auditorium: ");
-        String auditoriumName = scanner.nextLine();
+        System.out.print("Enter id of event: ");
+        String assignedEventId = scanner.nextLine();
+        AssignedEvent assignedEvent = eventService.getAssignedEventById(Integer.parseInt(assignedEventId));
 
         System.out.print("Enter seat number: ");
-        int seat = Integer.parseInt(scanner.nextLine());
-        System.out.print("Enter date and time (yyyy-MM-dd-HH-mm): ");
-        String dateString = scanner.nextLine();
-        Date date = null;
-        try {
-            date = new SimpleDateFormat("yyyy-MM-dd-HH-mm").parse(dateString);
-        } catch (ParseException e) {
-            date = null;
-        }
+        String seat = scanner.nextLine();
 
-        Event event = eventService.getByName(eventName);
-        Auditorium auditorium = auditoriumService.getAuditoriumByName(auditoriumName);
         User user = userService.getById(currentUserId);
 
-        Ticket ticket = bookingService.getTicketPrice(event, date, auditorium, seat, user);
+        Ticket ticket = bookingService.getTicketPrice(assignedEvent, Integer.parseInt(seat), user);
         System.out.println("price is " + ticket.getPrice());
         System.out.print("Do you want to buy this ticket? (y/n):");
         String answer = scanner.nextLine();
@@ -265,9 +256,9 @@ public class App {
     }
 
     private void showAllEvents() {
-        Map<Date, AssignedEvent> events = eventService.getAssignedEvents();
-        for(Map.Entry<Date, AssignedEvent> entry : events.entrySet()) {
-            System.out.println("Date:" + entry.getKey() + " " + entry.getValue());
+        Collection<AssignedEvent> events = eventService.getAssignedEvents();
+        for(AssignedEvent event : events) {
+            System.out.println(event.toString());
         }
     }
 
@@ -315,6 +306,8 @@ public class App {
     private void viewPurchasedTickets() {
         Collection<Ticket> tickets = bookingService.getPurchasedTickets();
         System.out.println("----Purchased Tickets----");
+        if (tickets == null) return;
+
         for(Ticket ticket : tickets) {
             System.out.println(ticket);
         }
@@ -345,13 +338,13 @@ public class App {
 
         int eventId = eventService.create(event);
 
-        System.out.println("Enter auditorium name: ");
+        System.out.println("Enter auditorium id: ");
         Collection<Auditorium> auditoriums = auditoriumService.getAuditoriums();
         for(Auditorium auditorium : auditoriums) {
-            System.out.println("auditorium: " + auditorium.getName());
+            System.out.println(auditorium.getId() + " " + auditorium.getName());
         }
         String auditoriumName = scanner.nextLine();
-        Auditorium auditorium = auditoriumService.getAuditoriumByName(auditoriumName);
+        Auditorium auditorium = auditoriumService.getAuditoriumById(Integer.parseInt(auditoriumName));
 
         System.out.print("Event date and time (yyyy-MM-dd-HH-mm): ");
         String dateString = scanner.nextLine();

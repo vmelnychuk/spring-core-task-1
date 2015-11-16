@@ -95,7 +95,6 @@ public class Auditorium {
         return "Auditorium{" +
                 "name='" + name + '\'' +
                 ", numberOfSeats=" + numberOfSeats +
-                ", vipSeats=" + vipSeats.toString() +
                 ", vipAdditionalPrice=" + vipAdditionalPrice +
                 '}';
     }

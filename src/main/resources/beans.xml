@@ -85,21 +85,6 @@
     <bean id="assignedevent" class="epam.spring.beans.AssignedEvent" scope="prototype">
     </bean>
 
-    <bean id="assignedevent1" class="epam.spring.beans.AssignedEvent" scope="prototype">
-        <constructor-arg name="auditorium" ref="big"/>
-        <constructor-arg name="event" ref="event1"/>
-    </bean>
-
-    <bean id="assignedevent2" class="epam.spring.beans.AssignedEvent" scope="prototype">
-        <constructor-arg name="auditorium" ref="medium"/>
-        <constructor-arg name="event" ref="event2"/>
-    </bean>
-
-    <bean id="assignedevent3" class="epam.spring.beans.AssignedEvent" scope="prototype">
-        <constructor-arg name="auditorium" ref="small"/>
-        <constructor-arg name="event" ref="event3"/>
-    </bean>
-
     <bean id="ticket" class="epam.spring.beans.Ticket" scope="prototype">
     </bean>
 

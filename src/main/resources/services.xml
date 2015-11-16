@@ -7,23 +7,29 @@
     <import resource="beans-maps.xml"/>
     <import resource="jdbc.xml"/>
 
-    <bean id="userService" class="epam.spring.jdbc_services.UserServiceJdbc">
-        <property name="jdbcTemplate" ref="jdbcTemplate"/>
+    <bean id="userService" class="epam.spring.jdbc_services.UserServiceJdbc"
+          init-method="init" destroy-method="destroy">
+        <constructor-arg ref="jdbcTemplate"/>
     </bean>
 
-    <bean id="eventService" class="epam.spring.map_services.EventServiceMap">
-        <constructor-arg ref="events-map"/>
+    <bean id="eventService" class="epam.spring.jdbc_services.EventServiceJdbc"
+            init-method="init" destroy-method="destroy">
+        <constructor-arg ref="jdbcTemplate"/>
         <property name="auditoriumService" ref="auditoriumService"/>
-        <property name="assignedEvents" ref="assigned-event-map"/>
     </bean>
 
-    <bean id="auditoriumService" class="epam.spring.map_services.AuditoriumServiceMap">
-        <constructor-arg ref="auditoriums-map" />
+    <bean id="auditoriumService" class="epam.spring.jdbc_services.AuditoriumServiceJdbc"
+          init-method="init" destroy-method="destroy">
+        <constructor-arg ref="jdbcTemplate" />
     </bean>
 
-    <bean id="bookingService" class="epam.spring.map_services.BookingServiceMap">
+    <bean id="bookingService" class="epam.spring.jdbc_services.BookingServiceJdbc"
+          init-method="init" destroy-method="destroy">
+        <constructor-arg ref="jdbcTemplate"/>
         <constructor-arg ref="discountService"/>
-        <constructor-arg ref="tickets-map"/>
+        <constructor-arg ref="auditoriumService"/>
+        <constructor-arg ref="eventService"/>
+        <constructor-arg ref="userService"/>
     </bean>
 
     <bean id="discountService" class="epam.spring.map_services.DiscountServiceMap">

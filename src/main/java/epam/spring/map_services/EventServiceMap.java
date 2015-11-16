@@ -9,7 +9,7 @@ import epam.spring.services.EventService;
 
 import java.util.*;
 
-public class EventServiceMap implements EventService {
+public abstract class EventServiceMap implements EventService {
     private Map<Integer, Event> events;
     private Map<Date, AssignedEvent> assignedEvents;
     private AuditoriumService auditoriumService;
@@ -73,11 +73,6 @@ public class EventServiceMap implements EventService {
 
     public void setAuditoriumService(AuditoriumService auditoriumService) {
         this.auditoriumService = auditoriumService;
-    }
-
-    @Override
-    public Map<Date, AssignedEvent> getAssignedEvents() {
-        return assignedEvents;
     }
 
     public void setAssignedEvents(Map<Date, AssignedEvent> assignedEvents) {

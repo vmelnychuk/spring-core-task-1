@@ -41,6 +41,11 @@ public class BookingServiceMap implements BookingService {
         return ticket;
     }
 
+    @Override
+    public Ticket getTicketPrice(AssignedEvent assignedEvent, int seatNumber, User user) {
+        return getTicketPrice(assignedEvent.getEvent(), assignedEvent.getDate(), assignedEvent.getAuditorium(), seatNumber, user);
+    }
+
     public void bookTicket(User user, Ticket ticket) {
         if (user != null) {
             ticket.setUser(user);
