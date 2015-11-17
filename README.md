@@ -75,3 +75,5 @@ Based on the home task performed for Spring Core (1.1-1.10) do the following:
 
 Based on the home task performed for Spring Aspects (2.1-2.2) do the following:
 - Add DAO object to store all counters into the database.
+
+### Notes: use MySQL, database name `cinema`

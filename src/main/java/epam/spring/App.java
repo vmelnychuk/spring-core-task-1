@@ -77,8 +77,6 @@ public class App {
         DiscountAspect discountAspect = applicationContext.getBean("discountAspect", DiscountAspect.class);
         System.out.println(discountAspect.toString());
 
-        LuckyWinnerAspect luckyWinnerAspect = applicationContext.getBean("luckyWinnerAspect", LuckyWinnerAspect.class);
-        System.out.println(luckyWinnerAspect.toString());
 
         applicationContext.close();
     }

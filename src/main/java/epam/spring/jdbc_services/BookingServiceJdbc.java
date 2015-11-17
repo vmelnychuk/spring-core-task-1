@@ -80,7 +80,6 @@ public class BookingServiceJdbc implements BookingService {
     public void bookTicket(User user, final Ticket ticket) {
         if (user != null) {
             ticket.setUser(user);
-            //todo: user service call
             user.addTicket(ticket);
         }
         template.update(new PreparedStatementCreator() {

@@ -1,6 +1,7 @@
 package epam.spring.aspects;
 
 import epam.spring.beans.Event;
+import epam.spring.beans.Pair;
 import epam.spring.beans.Ticket;
 import epam.spring.beans.User;
 import org.aspectj.lang.JoinPoint;
@@ -9,9 +10,15 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.core.RowMapper;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Collection;
+
 
 @Aspect
 public class CounterAspect {
@@ -20,34 +27,41 @@ public class CounterAspect {
     private static final String BOOKED_TABLE = "booked_table";
 
     private static final String CREATE_NAME_TABLE = "create table " + NAME_TABLE + " (" +
-            "event_id integer," +
-            "counter integer)";
+            "event_id integer not null," +
+            "counter integer," +
+            "primary key (event_id))";
     private static final String CREATE_PRICE_TABLE = "create table " + PRICE_TABLE + " (" +
-            "event_id integer," +
-            "counter integer)";
+            "event_id integer not null," +
+            "counter integer," +
+            "primary key(event_id))";
     private static final String CREATE_BOOKED_TABLE = "create table " + BOOKED_TABLE + " (" +
-            "event_id integer," +
-            "counter integer)";
+            "event_id integer not null," +
+            "counter integer," +
+            "primary key (event_id))";
+
+    private static final String COLUMNS = "event_id, counter";
 
     private static final String DROP_NAME_TABLE = "drop table " + NAME_TABLE;
     private static final String DROP_PRICE_TABLE = "drop table " + PRICE_TABLE;
     private static final String DROP_BOOKED_TABLE = "drop table " + BOOKED_TABLE;
 
+    private static final String NAME_UPSERT = "insert into " + NAME_TABLE + " (" + COLUMNS + ") values (?, ?) " +
+            "on duplicate key update counter = counter + 1";
+
+    private static final String PRICE_UPSERT = "insert into " + PRICE_TABLE + " (" + COLUMNS + ") values (?, ?) " +
+            "on duplicate key update counter = counter + 1";
+
+    private static final String BOOKED_UPSERT = "insert into " + BOOKED_TABLE + " (" + COLUMNS + ") values (?, ?) " +
+            "on duplicate key update counter = counter + 1";
+
+    private static final String GET_ALL_NAME = "select " + COLUMNS + " from " + NAME_TABLE;
+    private static final String GET_ALL_PRICE = "select " + COLUMNS + " from " + PRICE_TABLE;
+    private static final String GET_ALL_BOOKED = "select " + COLUMNS + " from " + BOOKED_TABLE;
+
     private JdbcTemplate template;
-    private Map<Event, Integer> getByNameCounter = new HashMap<>();
-    private Map<Event, Integer> getPriceCounter = new HashMap<>();
-    private Map<Event, Integer> bookedCounter = new HashMap<>();
 
     public CounterAspect(JdbcTemplate template) {
         this.template = template;
-    }
-
-    public CounterAspect(Map<Event, Integer> getByNameCounter,
-                         Map<Event, Integer> getPriceCounter,
-                         Map<Event, Integer> bookedCounter) {
-        this.getByNameCounter = getByNameCounter;
-        this.getPriceCounter = getPriceCounter;
-        this.bookedCounter = bookedCounter;
     }
 
     @Pointcut("execution(* *.getByName(..))")
@@ -64,37 +78,58 @@ public class CounterAspect {
             returning="eventObject")
     public void countGetByName(Object eventObject) {
         Event event = (Event) eventObject;
-        if(!getByNameCounter.containsKey(event)) {
-            getByNameCounter.put(event, 0);
-        }
-        getByNameCounter.put(event, getByNameCounter.get(event)+1);
+        final int eventId = event.getId();
+        template.update(new PreparedStatementCreator() {
+            @Override
+            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+                PreparedStatement preparedStatement = connection.prepareStatement(NAME_UPSERT);
+                preparedStatement.setInt(1, eventId);
+                preparedStatement.setInt(2, 1);
+                return preparedStatement;
+            }
+        });
     }
 
     @AfterReturning(
             pointcut="eventGetPrice()")
     public void countGetPrice(JoinPoint joinPoint) {
         Event event = (Event) joinPoint.getTarget();
-        if(!getPriceCounter.containsKey(event)) {
-            getPriceCounter.put(event, 0);
-        }
-        getPriceCounter.put(event, getPriceCounter.get(event)+1);
+        final int eventId = event.getId();
+        template.update(new PreparedStatementCreator() {
+            @Override
+            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+                PreparedStatement preparedStatement = connection.prepareStatement(PRICE_UPSERT);
+                preparedStatement.setInt(1, eventId);
+                preparedStatement.setInt(2, 1);
+                return preparedStatement;
+            }
+        });
     }
 
     @Before("ticketBookedFroEvent() && args(user, ticket)")
     public void countBookTicket(User user, Ticket ticket) {
         Event event = ticket.getEvent();
-        if(!bookedCounter.containsKey(event)) {
-            bookedCounter.put(event, 0);
-        }
-        bookedCounter.put(event, bookedCounter.get(event)+1);
+        final int eventId = event.getId();
+        template.update(new PreparedStatementCreator() {
+            @Override
+            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+                PreparedStatement preparedStatement = connection.prepareStatement(BOOKED_UPSERT);
+                preparedStatement.setInt(1, eventId);
+                preparedStatement.setInt(2, 1);
+                return preparedStatement;
+            }
+        });
     }
 
     @Override
     public String toString() {
+        Collection<Pair<Integer, Integer>> names = template.query(GET_ALL_NAME, new EventMapper());
+        Collection<Pair<Integer, Integer>> prices = template.query(GET_ALL_PRICE, new EventMapper());
+        Collection<Pair<Integer, Integer>> booked = template.query(GET_ALL_BOOKED, new EventMapper());
         return "CounterAspect{\n" +
-                "getByNameCounter=" + getByNameCounter +
-                ",\n getPriceCounter=" + getPriceCounter +
-                ",\n bookedCounter=" + bookedCounter +
+                "getByNameCounter=" + names.toString() +
+                ",\n getPriceCounter=" + prices.toString() +
+                ",\n bookedCounter=" + booked.toString() +
                 '}';
     }
 
@@ -108,5 +143,16 @@ public class CounterAspect {
         template.execute(DROP_NAME_TABLE);
         template.execute(DROP_PRICE_TABLE);
         template.execute(DROP_BOOKED_TABLE);
+    }
+
+    private class EventMapper implements RowMapper<Pair<Integer, Integer>> {
+
+        @Override
+        public Pair<Integer, Integer> mapRow(ResultSet resultSet, int i) throws SQLException {
+            Pair<Integer, Integer> pair = new Pair<Integer, Integer>();
+            pair.setKey(resultSet.getInt("event_id"));
+            pair.setValue(resultSet.getInt("counter"));
+            return pair;
+        }
     }
 }
